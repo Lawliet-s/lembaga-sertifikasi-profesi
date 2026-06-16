@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $beranda_img1->id }} | Admin LSP POLITAP
+    {{ $beranda_img1->id }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -18,8 +18,8 @@
         </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('beranda_img1.index') }}">Carousel</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('beranda_img1.index') }}">Carousel</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">{{ $beranda_img1->id }}</li>
             </ol>
         </nav>

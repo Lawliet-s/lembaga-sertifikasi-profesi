@@ -36,11 +36,6 @@ class Skema extends Model
     }
 
 
-    public function status(){
-        return $this->belongsTo(Status::class);
-    }
-
-
     public function unikoms(){
         return $this->hasMany(Unikom::class);
     }
@@ -64,10 +59,6 @@ class Skema extends Model
             'skema_id',
             'unikom_id'
         );
-    }
-
-    public function formapl2s(){
-        return $this->hasMany(Formapl2::class);
     }
 
     public function skknis(){

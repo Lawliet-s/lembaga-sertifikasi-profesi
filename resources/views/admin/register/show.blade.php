@@ -1,6 +1,7 @@
 @extends('layout/admin')
+
 @section('judul')
-    {{ $validasi->user_name }} | Admin LSP POLITAP
+    {{ $validasi->user_name }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -9,261 +10,204 @@
 
 @section('isi')
     @include('layout/verifikasi')
+
     <div class="page-header">
         <h4>
             <i class="fas fa-edit"></i> Rincian Data Pemohon Sertifikasi
         </h4>
-        <!-- /////////////////////////////////// -->
-        <!-- BREADCRUMB -->
-        <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('registrasi.baru') }}">Data Pendaftaran
-                        Terbaru</a></li>
-                <li style="color: #fff" class="breadcrumb-item active" aria-current="page">{{ $validasi->id }}</li>
+            <ol class="breadcrumb breadcrumb-custom bg-danger">
+                <li class="breadcrumb-item"><a href="{{ route('admin') }}" style="color: var(--secondary-color)">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('registrasi.baru') }}" style="color: var(--secondary-color)">Data Pendaftaran Terbaru</a></li>
+                <li class="breadcrumb-item active" style="color: #fff" aria-current="page">{{ $validasi->id }}</li>
             </ol>
         </nav>
-    </div><br>
+    </div>
+
     <div class="row">
-        <!-- /////////////////////////////////// -->
-        <!-- SISI KIRI  DATA -->
-        <!-- /////////////////////////////////// -->
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
+                        {{-- LEFT COLUMN: Tables --}}
                         <div class="col-lg-4">
-                            <h4 class="card-title"><i class="far fa-id-card "></i> Data Sertifikasi</h4>
-                            <div class="d-flex">
-                                <div class="progress progress-md flex-grow">
-                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75"
-                                        style="width: 100%" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Kode Registrasi </td>
-                                    <td style="width: 200px">{{ $validasi->id }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Skema yang Daiambil </td>
-                                    <td style="width: 200px">{{ $validasi->skema_name }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Kode Skema </td>
-                                    <td style="width: 200px">{{ $validasi->kode_skema }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Tujuan Sertifikasi </td>
-                                    <td style="width: 200px">{{ $validasi->jenis }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Tanggal Mendaftar </td>
-                                    <td style="width: 200px">{{ $validasi->created_at->format('d-M-Y') }}</td>
-                                </tr>
-                            </table><br>
-                            <h4 class="card-title"><i class="far fa-id-card "></i> Data Pribadi</h4>
-                            <div class="d-flex">
-                                <div class="progress progress-md flex-grow">
-                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75"
-                                        style="width: 100%" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Nama Asesi</td>
-                                    <td style="width: 200px">{{ $validasi->user_name }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">NIM</td>
-                                    <td style="width: 200px">{{ $validasi->nim }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Tempat Lahir</td>
-                                    <td style="width: 200px">{{ $validasi->tmpt_lahir }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Tanggal Lahir</td>
-                                    <td style="width: 200px">{{ $validasi->tgl_lahir }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Jenis Kelamin</td>
-                                    <td style="width: 200px">{{ $validasi->sex->sex }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Kewarganegaraan</td>
-                                    <td style="width: 200px">{{ $validasi->negara }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Alamat</td>
-                                    <td style="width: 200px">{{ $validasi->alamat }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Kode Post</td>
-                                    <td style="width: 200px">{{ $validasi->kode_post }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Email</td>
-                                    <td style="width: 200px">{{ $validasi->surel }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Nomor Handphone</td>
-                                    <td style="width: 200px">{{ $validasi->no_hp }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">No Telp Rumah</td>
-                                    <td style="width: 200px">{{ $validasi->rmh }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">No Telp Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->ktr }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Pendidikan Terakhir</td>
-                                    <td style="width: 200px">{{ $validasi->tmt }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Jurusan</td>
-                                    <td style="width: 200px">{{ $validasi->jurusan->jurusan }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Semester Kuliah</td>
-                                    <td style="width: 200px">{{ $validasi->semester->semester }}</td>
-                                </tr>
-                            </table><br>
-                            <h4 class="card-title"><i class="far fa-id-card "></i> Data Pekerjaan Sekarang</h4>
-                            <div class="d-flex">
-                                <div class="progress progress-md flex-grow">
-                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75"
-                                        style="width: 100%" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Nama Institusi/Perusahaan</td>
-                                    <td style="width: 200px">{{ $validasi->institusi }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Jabatan</td>
-                                    <td style="width: 200px">{{ $validasi->jabatan }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Alamat Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->alamat_kantor }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">Kode Post Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->postal }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">No Telp Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->telp }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">No Telp Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->email3 }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px" class="text-muted">No Fax Kantor</td>
-                                    <td style="width: 200px">{{ $validasi->fax }}</td>
-                                </tr>
+                            {{-- Data Sertifikasi --}}
+                            <h4 class="card-title"><i class="far fa-id-card"></i> Data Sertifikasi</h4>
+                            <hr class="my-2">
+                            <table class="table table-bordered table-sm">
+                                <tr><td class="text-muted" style="width:120px">Kode Registrasi</td><td>{{ $validasi->id }}</td></tr>
+                                <tr><td class="text-muted">Skema yang Diambil</td><td>{{ $validasi->skema_name }}</td></tr>
+                                <tr><td class="text-muted">Kode Skema</td><td>{{ $validasi->kode_skema }}</td></tr>
+                                <tr><td class="text-muted">Tujuan Sertifikasi</td><td>{{ $validasi->jenis }}</td></tr>
+                                <tr><td class="text-muted">Tanggal Mendaftar</td><td>{{ $validasi->created_at->format('d-M-Y') }}</td></tr>
+                            </table>
+                            <div class="mt-4"></div>
+
+                            {{-- Data Pribadi --}}
+                            <h4 class="card-title"><i class="far fa-id-card"></i> Data Pribadi</h4>
+                            <hr class="my-2">
+                            <table class="table table-bordered table-sm">
+                                <tr><td class="text-muted" style="width:120px">Nama Asesi</td><td>{{ $validasi->user_name }}</td></tr>
+                                <tr><td class="text-muted">NIK</td><td>{{ $validasi->nik }}</td></tr>
+                                <tr><td class="text-muted">Tempat Lahir</td><td>{{ $validasi->tmpt_lahir }}</td></tr>
+                                <tr><td class="text-muted">Tanggal Lahir</td><td>{{ $validasi->tgl_lahir }}</td></tr>
+                                <tr><td class="text-muted">Jenis Kelamin</td><td>{{ $validasi->sex->sex ?? '-' }}</td></tr>
+                                <tr><td class="text-muted">Kewarganegaraan</td><td>{{ $validasi->negara }}</td></tr>
+                                <tr><td class="text-muted">Alamat</td><td>{{ $validasi->alamat }}</td></tr>
+                                <tr><td class="text-muted">Kode Pos</td><td>{{ $validasi->kode_post }}</td></tr>
+                                <tr><td class="text-muted">Email</td><td>{{ $validasi->surel }}</td></tr>
+                                <tr><td class="text-muted">No. Handphone</td><td>{{ $validasi->no_hp }}</td></tr>
+                                <tr><td class="text-muted">No. Telp Rumah</td><td>{{ $validasi->rmh ?? '-' }}</td></tr>
+                                <tr><td class="text-muted">No. Telp Kantor</td><td>{{ $validasi->ktr ?? '-' }}</td></tr>
+                                <tr><td class="text-muted">Pendidikan Terakhir</td><td>{{ $validasi->tmt }}</td></tr>
+                                <tr><td class="text-muted">Jurusan</td><td>{{ $validasi->jurusan->jurusan ?? '-' }}</td></tr>
+                                <tr><td class="text-muted">Semester Kuliah</td><td>{{ $validasi->semester->semester ?? '-' }}</td></tr>
+                            </table>
+                            <div class="mt-4"></div>
+
+                            {{-- Data Pekerjaan --}}
+                            <h4 class="card-title"><i class="far fa-id-card"></i> Data Pekerjaan Sekarang</h4>
+                            <hr class="my-2">
+                            <table class="table table-bordered table-sm">
+                                <tr><td class="text-muted" style="width:120px">Institusi/Perusahaan</td><td>{{ $validasi->institusi }}</td></tr>
+                                <tr><td class="text-muted">Jabatan</td><td>{{ $validasi->jabatan }}</td></tr>
+                                <tr><td class="text-muted">Alamat Kantor</td><td>{{ $validasi->alamat_kantor }}</td></tr>
+                                <tr><td class="text-muted">Kode Pos Kantor</td><td>{{ $validasi->postal }}</td></tr>
+                                <tr><td class="text-muted">No. Telp Kantor</td><td>{{ $validasi->telp }}</td></tr>
+                                <tr><td class="text-muted">Email Kantor</td><td>{{ $validasi->email3 }}</td></tr>
+                                <tr><td class="text-muted">No. Fax Kantor</td><td>{{ $validasi->fax ?? '-' }}</td></tr>
                             </table>
                         </div>
-                        <!-- /////////////////////////////////// -->
-                        <!-- SISI KANAN DATA -->
-                        <!-- /////////////////////////////////// -->
+
+                        {{-- RIGHT COLUMN: Status & Documents --}}
                         <div class="col-lg-8 pl-lg-5">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <div class="d-flex align-items-center">
-                                        <h5 class="mb-0 mr-2 text-black">{{ $validasi->user_name }}</h5>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h5 class="mb-0 mr-2 text-black">{{ $validasi->skema_name }}</h5>
-                                    </div>
+                                    <h5 class="mb-1 text-dark">{{ $validasi->user_name }}</h5>
+                                    <h5 class="mb-0 text-dark">{{ $validasi->skema_name }}</h5>
                                 </div>
-                                <button class="btn btn-light text-white">{!! $validasi->status !!}</button>
-                                <h4 class="card-title"></h4>
-                            </div><br>
-                            <a href="{{ route('koreksiformulir', $validasi->id) }}"><button
-                                    class="btn btn-warning btn-rounded btn-block btn-sm"><i class="fas fa-edit"></i> Koreksi Data
-                                    Formulir</button></a>
-                            <div class="mt-4 py-2 border-top border-bottom">
-                                <h4 class="card-title"><i class="far fa-id-card "></i> Bukti Persyaratan Dasar Pemohon
-                                </h4>
-                                <div class="d-flex">
-                                    <div class="progress progress-md flex-grow">
-                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75"
-                                            style="width: 100%" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div><br>
-                                <ul class="nav profile-navbar">
-                                    @foreach ($validasi->upload_files as $asu)
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                                @if ($asu->image)
-                                                    <a class="nav-link active" href="{{ asset($asu->image) }}"
-                                                        target="_blank">
-                                                        <i class="fas fa-check-circle"></i>
-                                                        {{ $asu->name }}
+                                <button class="btn btn-light text-white" style="pointer-events:none">{!! $validasi->status !!}</button>
+                            </div>
+                            <hr>
+
+                            {{-- Ubah Status --}}
+                            <div class="card bg-light p-3 mb-4">
+                                <h6 class="card-title mb-2"><i class="fas fa-flag"></i> Ubah Status Pendaftaran</h6>
+                                <form action="{{ route('validasi.status', $validasi->id) }}" method="POST" class="form-inline">
+                                    @csrf @method('put')
+                                    <select name="status" class="form-control form-control-sm mr-2 mb-2">
+                                        <option value="pending" {{ Str::contains($validasi->status, 'Menunggu Validasi') ? 'selected' : '' }}>Menunggu Validasi</option>
+                                        <option value="diverifikasi" {{ Str::contains($validasi->status, 'Divalidasi') ? 'selected' : '' }}>Diverifikasi</option>
+                                        <option value="ditolak" {{ Str::contains($validasi->status, 'Ditolak') ? 'selected' : '' }}>Ditolak</option>
+                                        <option value="revisi" {{ Str::contains($validasi->status, 'Revisi') ? 'selected' : '' }}>Revisi</option>
+                                    </select>
+                                    <input type="text" name="keterangan" class="form-control form-control-sm mr-2 mb-2" placeholder="Keterangan (opsional)" value="{{ $validasi->keterangan }}" style="min-width:200px">
+                                    <button type="submit" class="btn btn-sm btn-primary mb-2"><i class="fas fa-save"></i> Simpan</button>
+                                </form>
+                            </div>
+
+                            {{-- Uploaded Documents --}}
+                            <h4 class="card-title"><i class="far fa-id-card"></i> Bukti Persyaratan Dasar Pemohon</h4>
+                            <hr class="my-2">
+                            @if ($validasi->upload_files->count())
+                                <div class="row">
+                                    @foreach ($validasi->upload_files as $file)
+                                        <div class="col-md-6 mb-3">
+                                            <div class="border rounded p-2 d-flex align-items-center">
+                                                @if ($file->image)
+                                                    <a href="{{ asset('storage/' . $file->image) }}" target="_blank" class="mr-2 text-success">
+                                                        <i class="fas fa-check-circle fa-lg"></i>
+                                                    </a>
+                                                    <a href="{{ asset('storage/' . $file->image) }}" target="_blank" class="text-truncate d-inline-block" style="max-width:180px">
+                                                        {{ $file->name }}
+                                                    </a>
+                                                    <a href="{{ asset('storage/' . $file->image) }}" target="_blank" class="ml-auto">
+                                                        <img src="{{ asset('storage/' . $file->image) }}" width="50" height="50" class="rounded" style="object-fit:cover">
                                                     </a>
                                                 @else
-                                                    <a style="color: #f64d4d" class="nav-link active" target="_blank">
-                                                        <i class="fas fa-times-circle"></i>
-                                                        {{ $asu->name }}
-                                                    </a>
+                                                    <span class="mr-2 text-muted"><i class="fas fa-times-circle fa-lg"></i></span>
+                                                    <span class="text-muted">{{ $file->name }}</span>
                                                 @endif
-                                                <img src="{{ asset($asu->image) }}" width="100px" alt="">
-                                            </a>
-                                        </li>
+                                            </div>
+                                        </div>
                                     @endforeach
-                            </div><br>
-
-                            <h4 class="card-title"><i class="far fa-id-card "></i> Bukti Asesmen Mandiri</h4>
-                            <div class="d-flex">
-                                <div class="progress progress-md flex-grow">
-                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75"
-                                        style="width: 100%" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                            </div>
-                            <div class="mt-4 py-2 border-top border-bottom">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th style="width: 10px">Status</th>
-                                            <th style="width: 400px">Elemen</th>
-                                            <th style="width: 400px">Bukti</th>
-                                        </tr>
-                                    </thead>
-                                    @foreach ($validasi->xnxxes as $data)
-                                        <tbody>
+                            @else
+                                <p class="text-muted">Belum ada file yang diunggah.</p>
+                            @endif
+
+                            <div class="mt-4"></div>
+
+                            {{-- FR.APL.01 --}}
+                            <h4 class="card-title"><i class="fas fa-file-alt"></i> Data FR.APL.01 — Unit Kompetensi</h4>
+                            <hr class="my-2">
+                            @if ($skema && $skema->unikoms->count())
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                        <thead class="bg-light">
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>
-                                                    {!! $data->status !!}
-                                                </td>
-                                                <td>{{ $data->asesmen_name }}</td>
-                                                <td>
-                                                    @if ($data->image)
-                                                        <a href="{{ asset($data->image) }}" target="_blank">
-                                                            <i style="color: #2a4bd1" class="fas fa-check-circle">ADA</i>
-                                                        </a>
-                                                    @else
-                                                        <i style="color: #f64d4d" class="fas fa-times-circle">KOSONG</i>
-                                                    @endif
-                                                </td>
+                                                <th style="width:40px">#</th>
+                                                <th>Kode Unit</th>
+                                                <th>Judul Unit</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($skema->unikoms as $uk)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $uk->kode_unikom ?? '-' }}</td>
+                                                    <td>{{ $uk->unikom ?? '-' }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
-                                    @endforeach
-                                </table>
-                            </div>
+                                    </table>
+                                </div>
+                            @else
+                                <p class="text-muted">Tidak ada data unit kompetensi untuk skema ini.</p>
+                            @endif
+                            <div class="mt-4"></div>
+
+                            {{-- Self Assessment --}}
+                            <h4 class="card-title"><i class="far fa-id-card"></i> Bukti Asesmen Mandiri</h4>
+                            <hr class="my-2">
+                            @if ($validasi->xnxxes->count())
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th style="width:40px">#</th>
+                                                <th style="width:80px">Status</th>
+                                                <th>Elemen</th>
+                                                <th style="width:100px">Bukti</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($validasi->xnxxes as $data)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{!! $data->status !!}</td>
+                                                    <td>{{ $data->asesmen_name }}</td>
+                                                    <td>
+                                                        @if ($data->image)
+                                                            <a href="{{ asset('storage/' . $data->image) }}" target="_blank" class="text-primary">
+                                                                <i class="fas fa-check-circle"></i> ADA
+                                                            </a>
+                                                        @else
+                                                            <span class="text-muted"><i class="fas fa-times-circle"></i> KOSONG</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <p class="text-muted">Belum ada data asesmen mandiri.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

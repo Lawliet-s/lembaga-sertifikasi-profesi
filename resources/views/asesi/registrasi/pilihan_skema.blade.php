@@ -1,7 +1,7 @@
 @extends('layout/asesi')
 
 @section('judul')
-    Pilihan Skema | LSP-POLITAP
+    Pilihan Skema {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -31,6 +31,7 @@
                         <tr>
                             <th class="text-muted">Kode Skema</th>
                             <th class="text-muted">Nama Skema</th>
+                            <th class="text-muted">Status</th>
                             <th class="text-muted">Mendaftar</th>
                         </tr>
                     </thead>
@@ -42,6 +43,9 @@
                                 </td>
                                 <td class="font-weight-bold">
                                     {{ $asu->skema }}
+                                </td>
+                                <td class="font-weight-bold">
+                                    {{ $asu->status_id }}
                                 </td>
                                 <td> <button type="button" class="btn btn-info font-weight-bold" data-toggle="modal"
                                         data-target="#exampleModal-{{ $asu->id }}"><i class="fas  fa-check-square"></i> Mendaftar</button>
@@ -83,10 +87,8 @@
                             {{-- <--------------- DATA PRIBADI ---------------> --}}
                             <input type="hidden" class="form-control" name="user_name"
                                 value="{{ old('name', Auth::user()->name) }}">
-                            <input type="hidden" maxlength="25" class="form-control" name="nim"
-                                value="{{ old('email', Auth::user()->email) }}">
-                            <input type="hidden" maxlength="25" class="form-control" name="nim"
-                                value="{{ old('email', Auth::user()->email) }}">
+                            <input type="hidden" maxlength="50" class="form-control" name="nik"
+                                value="{{ old('nik', Auth::user()->nik) }}">
                             <input type="hidden" maxlength="25" class="form-control" name="sex_id"
                                 value="{{ old('email', Auth::user()->sex_id) }}">
                             <input type="hidden" class="form-control" name="tgl_lahir"

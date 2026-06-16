@@ -12,10 +12,10 @@
             padding: 0;
         }
 
-        /* .container{
-                 width:90%
-                 margin:10px auto;
-                } */
+        em {
+            color: var(--secondary-color);
+        }   
+
         .portfolio-menu {
             text-align: center;
         }
@@ -46,8 +46,6 @@
 @endsection
 
 @section('javascript')
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 
@@ -67,8 +65,8 @@
             return false;
         });
         $(document).ready(function() {
-            var popup_btn = $('.popup-btn');
-            popup_btn.magnificPopup({
+            $('.portfolio-item').magnificPopup({
+                delegate: 'a.popup-btn',
                 type: 'image',
                 gallery: {
                     enabled: true
@@ -102,14 +100,28 @@
             <h2>{{ $galeri->galeri }}<em></em></h2>
             <span>▬▬▬▬▬<em>▬▬▬▬▬</em></span>
         </div>
-        <div style="margin-top: 40px; margin-bottom: 40px" class="portfolio-item row">
-            @foreach ($galeri->galeri_fotos as $foto)
-                <div class="item selfie col-lg-3 col-md-4 col-6 col-sm">
+        <div style="margin-top: 40px; margin-bottom: 40px" class="portfolio-item row justify-content-center">
+            @forelse ($galeri->galeri_fotos as $foto)
+                <div class="item selfie col-lg-6 col-md-8 col-sm-12 text-center">
                     <a href="{{ asset($foto->image) }}" class="fancylight popup-btn" data-fancybox-group="light">
-                        <img class="img-fluid" src="{{ asset($foto->image) }}" alt="">
+                        <img class="img-fluid mx-auto d-block" src="{{ asset($foto->image) }}" alt="">
                     </a>
                 </div>
-            @endforeach
+            @empty
+                {{-- Tampilkan cover album jika tidak ada foto di galeri_fotos --}}
+                @if ($galeri->image)
+                    <div class="item selfie col-lg-10 col-md-11 col-sm-12 text-center">
+                        <a href="{{ asset($galeri->image) }}" class="fancylight popup-btn" data-fancybox-group="light">
+                            <img class="img-fluid mx-auto d-block" src="{{ asset($galeri->image) }}" alt="">
+                        </a>
+                    </div>
+                @else
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-images fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Belum ada foto di album ini</p>
+                    </div>
+                @endif
+            @endforelse
         </div>
     </div>
 

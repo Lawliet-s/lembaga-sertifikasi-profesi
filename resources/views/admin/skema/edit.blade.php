@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $skema->skema }} | Admin LSP POLITAP
+    {{ $skema->skema }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -17,8 +17,8 @@
     </h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('skema.index') }}">Skema/Kluster</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('skema.index') }}">Skema/Kluster</a></li>
             <li style="color: #eadcdc" class="breadcrumb-item active" aria-current="page">{{ $skema->id }}</li>
         </ol>
     </nav>
@@ -117,12 +117,27 @@
                     <label class="col-sm-3 col-form-label">Status</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="status_id">
-                                <option value="" holder>pilih</option>
-                                @foreach ($status as $result)
+                                <option value="" holder>Pilih Status</option>
+                                <option value="Aktif" @if ($skema->status_id == 'Aktif') selected @endif>Aktif</option>
+                                <option value="Nonaktif" @if ($skema->status_id == 'Nonaktif') selected @endif>Nonaktif</option>
+                            </select>
+                            @error('status_id')
+                                <div class="text-danger mt-2 text-sm">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Verifikasi</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="verifikasi_skema_id">
+                                <option value="" holder>Pilih Verifikasi</option>
+                                @foreach ($verifikasi_skemas as $result)
                                     <option value="{{ $result->id }}"
-                                    @if ($skema->status_id == $result->id)
+                                    @if ($skema->verifikasi_skema_id == $result->id)
                                         selected
-                                    @endif>{{ $result->status }}
+                                    @endif>{{ $result->name }}
                                     </option>
                                 @endforeach
                             </select>

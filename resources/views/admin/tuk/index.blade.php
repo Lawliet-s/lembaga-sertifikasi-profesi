@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    TUK | Admin LSP POLITAP
+    TUK | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -19,7 +19,7 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Tempat Uji Kompetensi</li>
             </ol>
         </nav>
@@ -76,9 +76,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Keterangan</label>
+                                    <label class="col-sm-3 col-form-label">Alamat</label>
                                     <div class="col-sm-9">
-                                        <input type="text" placeholder="Keterangan" maxlength="100" name="alamat"
+                                        <input type="text" placeholder="Alamat" maxlength="100" name="alamat"
                                             class="form-control" />
                                         @error('alamat')
                                             <div class="text-danger mt-2 text-sm">{{ $message }}</div>
@@ -86,11 +86,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Pengelola</label>
+                                    <label class="col-sm-3 col-form-label">Penanggung Jawab</label>
                                     <div class="col-sm-9">
-                                        <input type="text" placeholder="Pengelola" maxlength="100" name="pengelola"
+                                        <input type="text" placeholder="Penanggung Jawab" maxlength="100" name="pengelola"
                                             class="form-control" />
                                         @error('pengelola')
+                                            <div class="text-danger mt-2 text-sm">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Jenis TUK</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" placeholder="Jenis TUK" maxlength="100" name="jenis_tuk"
+                                            class="form-control" />
+                                        @error('jenis_tuk')
                                             <div class="text-danger mt-2 text-sm">{{ $message }}</div>
                                         @enderror
                                     </div>

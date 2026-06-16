@@ -1,4 +1,4 @@
-@extends('layout/admin1')
+@extends('layout/admin')
 @section('isi')
     @include('layout/verifikasi')
     <div class="page-header">
@@ -10,7 +10,7 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-inverse-danger">
-                <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Elemen</li>
             </ol>
         </nav>

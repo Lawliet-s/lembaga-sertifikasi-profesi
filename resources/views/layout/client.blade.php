@@ -11,7 +11,7 @@
         rel="stylesheet">
 
     <title>@yield('judul')</title>
-    <link rel="shortcut icon" href="{{ asset('general/assets/images/shortcut.jpg') }}" />
+    <link rel="shortcut icon" href="{{ asset(optional($site_setting)->favicon ?? 'general/assets/images/shortcut.jpg') }}" />
 
     <!-- Bootstrap & CSS Utama -->
     <link href="{{ asset('general/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -25,6 +25,14 @@
 
     <!-- CSS Spesial -->
     @yield('css')
+
+    <!-- Warna Dinamis dari Pengaturan Situs -->
+    <style>
+        :root {
+            --primary-color: {{ $site_setting->primary_color ?? '#9b0000e2' }};
+            --secondary-color: {{ $site_setting->secondary_color ?? '#f84949e2' }};
+        }
+    </style>
 
     <!-- Flip Card -->
     <style>
@@ -64,7 +72,7 @@
         }
 
         .flip-card-back {
-            background-color: #9b0000e2;
+            background-color: var(--primary-color);
             color: white;
             transform: rotateY(180deg);
         }
@@ -82,7 +90,7 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #9b0000e2;
+            background-color: var(--primary-color);
             min-width: 300px;
             box-shadow: 0px 8px 16px 0px rgba(41, 32, 32, 0.46);
             z-index: 1;
@@ -127,15 +135,21 @@
             <div class="row">
                 <div class="col-md-8 col-xs-12">
                     <ul class="left-info">
-                        <li><a href="#"><i class="fa fa-university"></i>Lembaga Sertifikasi Profesi
-                                Politeknik Negeri Ketapang</a></li>
+                        <li><a href="#"><i class="fa fa-university"></i>{{ optional($site_setting)->title ?? 'Lembaga Sertifikasi Profesi' }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <ul class="right-icons">
-                        <li><a href="https://www.instagram.com/lsppolitap/"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
-                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        @if(optional($site_setting)->instagram)
+                        <li><a rel="nofollow" href="{{ optional($site_setting)->instagram }}" target="_blank"><i
+                                    class="fa fa-instagram"></i></a></li>
+                        @endif
+                        @if(optional($site_setting)->twitter)
+                        <li><a href="{{ optional($site_setting)->twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        @endif
+                        @if(optional($site_setting)->facebook)
+                        <li><a href="{{ optional($site_setting)->facebook }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -148,14 +162,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul style="padding-left: 1%">
                         <li class="nav-item">
-                            <img style="margin: 10px" src="{{ asset('general/assets/images/bnsp.png') }}"
-                                height="40px">
-                            <img style="margin: 10px" src="{{ asset('general/assets/images/kemendikbud_small.png') }}"
-                                height="40px">
-                            <img style="margin: 10px" src="{{ asset('general/assets/images/politap_small.png') }}"
-                                height="40px">
-                            <img style="margin: 10px" src="{{ asset('general/assets/images/lsp_small.jpg') }}"
-                                height="40px">
+                            <img style="margin: 10px" src="{{ asset(optional($site_setting)->logo ?? 'assets/images/logo/lsp1.png') }}"
+                                alt="logo" width="50px" height="50px">
                         </li>
                     </ul>
                 </div>
@@ -171,9 +179,9 @@
                         <li class="nav-item @yield('profil') dropdown">
                             <a class="nav-link dropbtn">PROFIL <i class="fa  fa-chevron-down"></i></a>
                             <div class="dropdown-content">
-                                <a href="{{ route('tentang') }}">Tentang LSP-POLITAP</a>
+                                <a href="{{ route('tentang') }}">Tentang LSP</a>
                                 <a href="{{ route('struktur') }}">Struktur Organisasi</a>
-                                <a href="{{ route('pengelola') }}">Pengelola LSP-POLITAP</a>
+                                <a href="{{ route('pengelola') }}">Pengelola LSP</a>
                             </div>
                         </li>
                         <li class="nav-item @yield('layanan') dropdown">
@@ -198,15 +206,26 @@
                         </li>
                         @if (Auth::user())
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropbtn" style="color: #40124fda"><i class="fa fa-user"></i>
+                                <a class="nav-link dropbtn" style="color: var(--primary-color)"><i class="fa fa-user"></i>
                                 {{ Auth::user()->role }}
                                 </a>
                                 <div class="dropdown-content">
-                                    <a href="{{ route('profil.edit2') }}">Daftar Sertifikasi</a>
-                                    <a href="{{ route('dashasesi.index') }}">Dashboard Asesi</a>
-                                    <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">Logout</a>
+                                    @if(Auth::user()->hasRole('admin'))
+                                        <a href="{{ route('admin') }}">Dashboard Admin</a>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">Logout</a>
+                                    @elseif(Auth::user()->role === 'asesor')
+                                        <a href="{{ route('dashboard.asesor') }}">Dashboard Asesor</a>
+                                        <a href="{{ route('asesor.logout') }}"
+                                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">Logout</a>
+                                    @else
+                                        <a href="{{ route('dashasesi.index') }}">Dashboard Asesi</a>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">Logout</a>
+                                    @endif
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                         class="d-none">
                                         @csrf
@@ -214,10 +233,12 @@
                                 </div>
                             </li>
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" href="{{ route('login') }}"><i
-                                        class="fa fa-user"></i>
-                                    LOGIN</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropbtn" style="color: var(--primary-color)"><i class="fa fa-user"></i> LOGIN <i class="fa fa-chevron-down"></i></a>
+                                <div class="dropdown-content">
+                                    <a href="{{ route('login') }}">Login Asesi</a>
+                                    <a href="{{ route('loginasesor') }}">Login Asesor</a>
+                                </div>
                             </li>
                         @endif
                     </ul>
@@ -237,41 +258,41 @@
                 <div class="col-md-3 footer-item">
                     <h4><i class="fa fa-mobile-phone"></i> Kontak Admin</h4>
                     <ul class="menu-list">
-                        <li><i class="fa fa-whatsapp"></i> Whatsapp : 08965386474683</li>
-                        <li><i class="fa fa-envelope"></i> Email : lsp@politap.ac.id</li>
+                        @if(optional($site_setting)->phone)
+                        <li><i class="fa fa-whatsapp"></i> Whatsapp : {{ optional($site_setting)->phone }}</li>
+                        @endif
+                        @if(optional($site_setting)->email)
+                        <li><i class="fa fa-envelope"></i> Email : {{ optional($site_setting)->email }}</li>
+                        @endif
                     </ul>
                     <ul class="social-icons">
-                        <li><a rel="nofollow" href="https://www.instagram.com/lsppolitap/" target="_blank"><i
+                        @if(optional($site_setting)->instagram)
+                        <li><a rel="nofollow" href="{{ optional($site_setting)->instagram }}" target="_blank"><i
                                     class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 footer-item">
-                    <h4><i class="fa fa-university"></i> Lembaga Tertaut</h4>
-                    <ul class="menu-list">
-                        <li><a href="https://politap.ac.id/">Politeknik Negeri Ketapang</a></li>
-                        <li><a href="http://informatika.politap.ac.id/">Teknologi Informatika POLITAP</a></li>
-                        <li><a href="https://www.kemdikbud.go.id/">Kementerian
-                                Pendidikan, Kebudayaan,
-                                Riset, dan Teknologi</a></li>
-                        <li><a href="/">Lembaga Sertifikasi Profesi POLITAP</a></li>
-                        <li><a href="https://bnsp.go.id/">Badan Nasional Sertifikasi Profesi</a></li>
+                        @endif
+                        @if(optional($site_setting)->twitter)
+                        <li><a href="{{ optional($site_setting)->twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        @endif
+                        @if(optional($site_setting)->facebook)
+                        <li><a href="{{ optional($site_setting)->facebook }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-md-3 footer-item">
                     <h4><i class="fa fa-map-marker"></i> Alamat</h4>
-                    <p>Gedung Kuliah POLITAP Lantai
-                        1 ,<br>Jalan Rangge
-                        Sentap, Dalong, Sukaharja, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan
-                        Barat 78112.</p>
+                    <p>{!! nl2br(e(optional($site_setting)->address ?? 'Alamat LSP')) !!}</p>
                 </div>
                 <div class="col-md-3 footer-item last-item">
                     <div class="contact-form">
                         <form id="contact footer-contact" action="" method="post">
-                            <iframe height="220px" class="embed-responsive-item"
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15951.250339779255!2d109.988631!3d-1.8168375!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xe05ee65e3627ba6c!2sPoliteknik%20Negeri%20Ketapang!5e0!3m2!1sid!2sid!4v1650546915934!5m2!1sid!2sid"
-                                data-map="JTdCJTIycG9zaXRpb25UeXBlJTIyJTNBJTIybWFwLWVtYmVkJTIyJTJDJTIyYWRkcmVzcyUyMiUzQSUyMmh0dHBzJTNBJTJGJTJGd3d3Lmdvb2dsZS5jb20lMkZtYXBzJTJGZW1iZWQlM0ZwYiUzRCExbTE0ITFtOCExbTMhMWQxNTk1MS4yNTAzMzk3NzkyNTUhMmQxMDkuOTg4NjMxITNkLTEuODE2ODM3NSEzbTIhMWkxMDI0ITJpNzY4ITRmMTMuMSEzbTMhMW0yITFzMHgwJTI1M0EweGUwNWVlNjVlMzYyN2JhNmMhMnNQb2xpdGVrbmlrJTI1MjBOZWdlcmklMjUyMEtldGFwYW5nITVlMCEzbTIhMXNpZCEyc2lkITR2MTY1MDU0NjkxNTkzNCE1bTIhMXNpZCEyc2lkJTIyJTJDJTIyem9vbSUyMiUzQW51bGwlMkMlMjJ0eXBlSWQlMjIlM0ElMjJyb2FkJTIyJTJDJTIybGFuZyUyMiUzQW51bGwlMkMlMjJhcGlLZXklMjIlM0FudWxsJTJDJTIybWFya2VycyUyMiUzQSU1QiU1RCUyQyUyMmVtYmVkJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZ3d3cuZ29vZ2xlLmNvbSUyRm1hcHMlMkZlbWJlZCUzRnBiJTNEITFtMTQhMW04ITFtMyExZDE1OTUxLjI1MDMzOTc3OTI1NSEyZDEwOS45ODg2MzEhM2QtMS44MTY4Mzc1ITNtMiExaTEwMjQhMmk3NjghNGYxMy4xITNtMyExbTIhMXMweDAlMjUzQTB4ZTA1ZWU2NWUzNjI3YmE2YyEyc1BvbGl0ZWtuaWslMjUyME5lZ2VyaSUyNTIwS2V0YXBhbmchNWUwITNtMiExc2lkITJzaWQhNHYxNjUwNTQ2OTE1OTM0ITVtMiExc2lkITJzaWQlMjIlN0Q="></iframe>
+                            @php
+                                $mapsUrl = optional($site_setting)->maps_embed;
+                            @endphp
+                            @if ($mapsUrl)
+                                <iframe src="{{ $mapsUrl }}" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            @else
+                                <iframe src="https://www.google.com/maps?q=Indonesia&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            @endif
                         </form>
                     </div>
                 </div>
@@ -283,10 +304,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>Copyright © 2022
-                        &diamondsuit; All Right Reserved</a><br>
-                        Designed & Developed By : <a href="http://informatika.politap.ac.id/">Teknik Informatika</a>
-                        <a href="https://politap.ac.id/">Politeknik Negeri Ketapang</a>
+                    <p>{!! optional($site_setting)->footer_text ?? 'Copyright © 2022 &diamondsuit; All Right Reserved' !!}<br>
                     </p>
                 </div>
             </div>
@@ -297,6 +315,7 @@
     <!-- Bootstrap & Jquery Script -->
     <script src="{{ asset('general/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('general/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Scrip tambahan -->
     <script src="{{ asset('general/assets/js/custom.js') }}"></script>

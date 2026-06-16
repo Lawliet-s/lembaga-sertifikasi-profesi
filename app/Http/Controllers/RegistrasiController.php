@@ -42,7 +42,7 @@ class RegistrasiController extends Controller
             'id' => ['required', 'unique:data_registers,id'],
             // 'sex_id' => ['required'],
             'kode_skema' => ['required'],
-            'nim' => ['required'],
+            'nik' => ['required'],
             // 'tmpt_lahir' => ['required'],
             // 'no_hp' => ['required'],
             // 'semester_id' => ['required'],
@@ -67,7 +67,7 @@ class RegistrasiController extends Controller
             $data_register = Data_register::create([
                 'id' => $request->id,
                 'kode' => $request->kode,
-                'nim' => $request->nim,
+                'nik' => $request->nik,
                 'skema_name' => $request->skema_name,
                 'tuk_id' => $request->tuk_id,
                 'kode_skema' => $request->kode_skema,
@@ -226,30 +226,6 @@ class RegistrasiController extends Controller
                 ->get();
         return view('asesi/registrasi/formulirapl1_tolak', compact('data', 'datareg', 'sex', 'jurusan',
         'semester', 'dokumen_upload', 'identitas', 'registrasi', 'xnxx'));
-    }
-
-
-    public function formulirapl2edit($id)
-    {
-        $data = Data_register::findorfail($id);
-        $registrasi = Data_register::where('user_id', auth()->user()->id)->get();
-        $xnxx = Xnxx::where('user_id', auth()->user()->id)
-                    ->where('kode', '>', 3)
-                    ->get();
-        $identitas = Upload_file::where('user_id', auth()->user()->id)->get();
-        return view('asesi/registrasi/formulirapl2', compact('data', 'identitas', 'xnxx', 'registrasi'));
-    }
-
-
-    public function formulirapl2edit_tolak($id)
-    {
-        $data = Data_register::findorfail($id);
-        $registrasi = Data_register::where('user_id', auth()->user()->id)->get();
-        $xnxx = Xnxx::where('user_id', auth()->user()->id)
-                    ->where('kode', '>=', 1)
-                    ->get();
-        $identitas = Upload_file::where('user_id', auth()->user()->id)->get();
-        return view('asesi/registrasi/formulirapl2_tolak', compact('data', 'identitas', 'xnxx', 'registrasi'));
     }
 
 

@@ -5,7 +5,7 @@
 @endsection
 
 @section('judul')
-    Informasi Sertifikasi | LSP-POLITAP
+    Informasi Sertifikasi {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('isi')
@@ -19,7 +19,7 @@
                 </div>
             </div><br>
             <h4 class="card-title">Nama : {{ $validasi->user_name }}</h4>
-            <h4 class="card-title">NIM : {{ $validasi->nim }}</h4>
+            <h4 class="card-title">NIK : {{ $validasi->nik }}</h4>
             <div class="col-md-12">
                 <div id="dragula-left" class="py-2">
                     <div class="card rounded border mb-2">
@@ -67,7 +67,7 @@
                         <div class="media">
                             <i class="fas fa-user icon-sm align-self-center mr-3"></i>
                             <div class="media-body">
-                                <h6 class="mb-1">{{ $validasi->asesor->nama }}</h6>
+                                <h6 class="mb-1">{{ $validasi->asesor?->nama ?? '-' }}</h6>
                                 <p class="mb-0 text-muted">
                                     Asesor Anda
                                 </p>
@@ -80,7 +80,7 @@
                         <div class="media">
                             <i class="fa fa-building icon-sm align-self-center mr-3"></i>
                             <div class="media-body">
-                                <h6 class="mb-1">{{ $validasi->tuk->tuk }}</h6>
+                                <h6 class="mb-1">{{ $validasi->tuk?->tuk ?? '-' }}</h6>
                                 <p class="mb-0 text-muted">
                                     Lokasi Uji Kompetensi
                                 </p>

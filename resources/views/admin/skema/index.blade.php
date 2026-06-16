@@ -1,6 +1,6 @@
 @extends('layout/admin')
 @section('judul')
-    Skema | Admin LSP POLITAP
+    Skema | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -16,7 +16,7 @@
         </h4>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Skema</li>
             </ol>
         </nav>
@@ -68,13 +68,16 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Prodi</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="skema_id">
+                                        <select class="form-control" name="prodi_id">
                                             <option value="" holder>Pilih Prodi</option>
                                             @foreach ($prodi as $result)
                                                 <option value="{{ $result->id }}">{{ $result->prodi }}</option>
                                                 select
                                             @endforeach
                                         </select>
+                                        @error('prodi_id')
+                                            <div class="text-danger mt-2 text-sm">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -114,17 +117,32 @@
                                     <div class="col-sm-9">
                                         <select class="form-control" name="status_id">
                                             <option value="" holder>Pilih Status Skema</option>
-                                            @foreach ($status as $result)
-                                                <option value="{{ $result->id }}">{{ $result->status }}</option>
-                                                select
-                                            @endforeach
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Nonaktif">Nonaktif</option>
                                         </select>
+                                        @error('status_id')
+                                            <div class="text-danger mt-2 text-sm">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <!-- <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Verifikasi</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="verifikasi_skema_id">
+                                                <option value="" holder>Pilih Verifikasi</option>
+                                                @foreach ($verifikasi_skemas as $result)
+                                                    <option value="{{ $result->id }}">{{ $result->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
 
-                        <div class="card-description text-left">
+                            <div class="card-description text-left">
                             <button type="submit" class="btn btn-success btn-rounded btn-icon-text btn-block">
                                 <i class="fa fa-save btn-icon-prepend"></i> Simpan
                             </button>
@@ -219,7 +237,7 @@
                                                         <td><label
                                                                 {{-- class="badge badge-light">{{ $asu->prodi->prodi }}</label> --}}
                                                         </td> -->
-                                                    <td>{!! $asu->status->keterangan !!}</td>
+                                                    <td>{{ $asu->status_id }}</td>
 
                                                     {{-- <td>@if ($asu->cekpendaftaran->cek)
                                                         <label class="badge badge-light">{{ $asu->cekpendaftaran->cek }}</label>

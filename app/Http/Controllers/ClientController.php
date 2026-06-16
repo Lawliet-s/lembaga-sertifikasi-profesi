@@ -11,7 +11,6 @@ use App\Models\Berita;
 use App\Models\Data_register;
 use App\Models\F_profil;
 use App\Models\File;
-use App\Models\Fileapl2;
 use App\Models\Filelain;
 use App\Models\Galeri_foto;
 use App\Models\Group_galeri;
@@ -46,7 +45,7 @@ class ClientController extends Controller
         $image2 = Beranda_img2::orderBy('created_at','desc')->take(4)->get();
         $carousel = Beranda_img1::all();
         $beranda = Beranda::all();
-        $profil = F_profil::where('id', '1')->get();
+        $profil = F_profil::first();
         $strorg = Strorg::all();
         $skema = Skema::all();
         $unikom = Unikom::all();
@@ -85,8 +84,8 @@ class ClientController extends Controller
 
     public function berita()
     {
-        $berita = Berita::orderBy('created_at','desc')->paginate(4);
-            // ->where('status', '<label class="badge badge-info">Posting</label>')->get();
+        $berita = Berita::where('status', '<label class="badge badge-info">Posting</label>')
+            ->orderBy('created_at','desc')->paginate(4);
         return view('client.berita', compact('berita'));
     }
 
@@ -185,7 +184,7 @@ class ClientController extends Controller
 
     public function tentang()
     {
-        $profil = F_profil::where('id', '2')->get();
+        $profil = F_profil::first();
         return view('client/tentang', compact('profil'));
     }
 
@@ -200,7 +199,7 @@ class ClientController extends Controller
 
     public function logo()
     {
-        $logo = F_profil::where('id', '2')->get();
+        $logo = F_profil::first();
         return view('client/logo', compact('logo'));
     }
 
@@ -229,7 +228,7 @@ class ClientController extends Controller
 
     public function visi()
     {
-        $visi = F_profil::where('id', '2')->get();
+        $visi = F_profil::first();
         return view('client/visi', compact('visi'));
     }
 
@@ -248,13 +247,6 @@ class ClientController extends Controller
     }
 
 
-    public function fileapl2()
-    {
-        $file = Fileapl2::all();
-        return view('client/fileapl2', compact('file'));
-    }
-
-
     public function filelain()
     {
         $file = Filelain::all();
@@ -270,8 +262,7 @@ class ClientController extends Controller
 
     public function reg()
     {
-        $jurusan = Jurusan::all();
-        return view('auth/register', compact('jurusan'));
+        return view('auth/register');
     }
 
 

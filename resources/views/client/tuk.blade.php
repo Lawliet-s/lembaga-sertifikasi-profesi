@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    TUK | LSP POLITAP
+    TUK | LSP
 @endsection
 
 @section('css')
@@ -21,12 +21,12 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fas fa-map-marked"></i> Tempat Uji Kompetensi </h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
+                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <table id="example" class="table table-striped display">
                             <thead class="mdb-color darken-3">
-                                <tr style="background-color: #c20303c5" class="text-white">
+                                <tr style="background-color: var(--primary-color)" class="text-white">
                                     <th style="width: 10px">#</th>
                                     <th style="width: 700px">Tempat Uji Kompetensi</th>
                                     <th style="width: 100px">Lihat Detail</th>

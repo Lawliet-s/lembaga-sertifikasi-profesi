@@ -8,73 +8,84 @@
 @endsection
 
 @section('css')
+<style>
+    .sidebar-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        transition: box-shadow .2s;
+    }
+    .sidebar-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    }
+    .sidebar-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .sidebar-card .card-body {
+        padding: 12px 15px;
+    }
+    .sidebar-card .card-body a {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        text-decoration: none;
+        display: block;
+        line-height: 1.4;
+    }
+    .sidebar-card .card-body a:hover {
+        color: #dc3545;
+    }
+    .main-article img {
+        width: 100%;
+        max-height: 450px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    .main-article h4 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .main-article .date {
+        font-size: 14px;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+    .main-article p {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #444;
+    }
+</style>
 @endsection
 
 @section('isi')
-    <div class="single-services">
+    <div class="single-services py-5">
         <div class="container">
-            <div style="margin-bottom: 100px" class="row" id="tabs">
-                <div class="col-md-4">
-                    <label style="font-size: 21px" class="font-weight-bold" for="">Artikel</label>
-                    <ul>
-                        @foreach ($artikel as $asu)
-                        <table>
-                            <tr>
-                                <td><img src="{{ asset($asu->image) }}" width="350px"></td>
-                            </tr>
-                            <tr>
-                                <td><a href='{{ route('berita_detail', Crypt::encryptString($asu->id)) }}'
-                                    style="font-size: 14px">{{ $asu->title }}</a></td>
-                            </tr>
-                        </table><hr>
-                        @endforeach
-                    </ul>
+            <div class="row">
+                <div class="col-md-4 order-md-2 mb-4">
+                    @foreach ($artikel as $item)
+                        <div class="sidebar-card">
+                            <div class="card-body">
+                                <a href="{{ route('berita_detail', Crypt::encryptString($item->id)) }}">{{ $item->title }}</a>
+                            </div>
+                            <a href="{{ route('berita_detail', Crypt::encryptString($item->id)) }}">
+                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="col-md-8">
-                    <section class='tabs-content'>
-                        <article id='tabs-1'>
-                            <img src="{{ asset($berita->image) }}" alt="">
-                            <h4>{{ $berita->title }}</h4>
-                            <h6 class="text-danger">{{ $berita->created_at->format('d/M/Y') }}</h6>
-                            <br>
-                            <p class="text-dark">
-                                {!! $berita->body !!}
-                            </p>
-                    </section>
+                <div class="col-md-8 order-md-1 main-article">
+                    <img src="{{ asset($berita->image) }}" alt="{{ $berita->title }}">
+                    <h4>{{ $berita->title }}</h4>
+                    <div class="date">{{ $berita->created_at->format('d/M/Y') }}</div>
+                    <p>{!! $berita->body !!}</p>
                 </div>
             </div>
         </div>
     </div>
-
-
-    {{-- <section class="u-clearfix u-grey-5 u-section-1" id="carousel_eba2">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <img src="{{ asset($berita->image) }}" alt="" class="u-image u-image-default u-image-1" data-image-width="1620"
-                data-image-height="1080" data-animation-name="customAnimationIn" data-animation-duration="1000">
-            <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
-                <div class="u-layout">
-                    <div class="u-layout-row">
-                        <div class="u-align-left u-container-style u-layout-cell u-size-60 u-white u-layout-cell-1">
-                            <div class="u-container-layout u-container-layout-1">
-                                <h2 class="u-text u-text-1" data-animation-name="customAnimationIn"
-                                    data-animation-duration="1000">
-                                    {{ $berita->title }}
-                                    <br>
-                                </h2>
-                                <div class="u-border-8 u-border-custom-color-2 u-expanded-width u-line u-line-horizontal u-line-1"
-                                    data-animation-name="customAnimationIn" data-animation-duration="1000"></div>
-                                <p class="u-text u-text-custom-color-1 u-text-2" data-animation-name="customAnimationIn"
-                                    data-animation-duration="1000">{{ $berita->created_at->format('d-M-Y') }}</p>
-                                <p class="u-text u-text-custom-color-1 u-text-2" data-animation-name="customAnimationIn"
-                                    data-animation-duration="1000">{{ $berita->kategori->kategori }}</p>
-                                <p class="u-custom-font u-heading-font u-text u-text-3"
-                                    data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                    {!! $berita->body !!}&nbsp;&nbsp;</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
 @endsection

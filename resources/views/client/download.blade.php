@@ -1,6 +1,6 @@
 @extends('layout/client')
 @section('judul')
-    Download Dokumen | LSP POLITAP
+    Download Dokumen | LSP
 @endsection
 
 @section('download')
@@ -147,12 +147,12 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fas fa-file-alt"></i> File Dokumen </h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
+                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                 </div>
             </div>
         </div>
@@ -177,19 +177,6 @@
                     <a href="{{ route('client_skkni') }}" class="">Lihat Detail</a>
                     <div class="ico-card">
                         <i class="fa fa-empire"></i>
-                    </div>
-                </div>
-            </div>
-            <!-- Formulir Pendaftaran -->
-            <div class="col-md-6 col-lg-4 column">
-                <div class="card gr-1">
-                    <div class="txt">
-                        <h1 class="font-weight-bold">Formulir Pendaftaran</h1>
-                        <p>Formulir APL-01 & APL-02</p>
-                    </div>
-                    <a href="{{ route('clien_fileapl2') }}" class="">Lihat Detail</a>
-                    <div class="ico-card">
-                        <i class="fa fa-rebel"></i>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 @extends('layout.asesi')
 
 @section('judul')
-    Koleksi Sertifikat | LSP-POLITAP
+    Koleksi Sertifikat {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -121,7 +121,7 @@
                                     Jurusan Kuliah &rarr;
                                 </span>
                                 <span class="float-right">
-                                    {{ $validasi->jurusan->jurusan }}
+                                    {{ $validasi->jurusan ? $validasi->jurusan->jurusan : 'Tidak ditentukan' }}
                                 </span>
                             </p>
                             <p class="clearfix">

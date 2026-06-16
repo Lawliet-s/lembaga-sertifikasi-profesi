@@ -1,7 +1,7 @@
 @extends('layout/asesi')
 
 @section('judul')
-    Informasi Skema | LSP-POLITAP
+    Informasi Skema {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -19,7 +19,7 @@
     <!-- /////////////////////////////////// -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
             <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Informasi Skema</li>
         </ol>
     </nav>
@@ -43,6 +43,7 @@
                             <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Order #: activate to sort column ascending" style="width: 10.4219px;">Lihat</th>
                             <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 300.141px;">Kode Skema</th>
                             <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 900.75px;">Skema</th>
+                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 100px;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,7 @@
                             </td>
                             <td class="font-weight-bold">{{ $asu->kode_skema }}</td>
                             <td class="font-weight-bold">{{ $asu->skema }}</td>
+                            <td class="font-weight-bold">{{ $asu->status_id }}</td>
                         </tr>
                     @endforeach
                     </tbody>

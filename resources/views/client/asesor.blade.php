@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Asesor | LSP POLITAP
+    Asesor | LSP
 @endsection
 
 @section('layanan')
@@ -25,12 +25,12 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fas fa-users"></i> Asesor </h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
+                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <div class="card-body">
                         <table id="example" class="table table-striped display">
                             <thead>
-                                <tr class="header" style="background-color: #c20303c5">
+                                <tr class="header" style="background-color: var(--primary-color)">
                                     <th style="width:10px; color: #ddd">#</th>
                                     <th style="width:60%; color: #ddd">Nama</th>
                                     <th style="width:40%; color: #ddd">Kode Asesor</th>

@@ -19,7 +19,7 @@
                                     @if ($tuk->image)
                                     <img src="{{ asset($tuk->image) }}" alt="">
                                     @else
-                                    <img src="{{ asset('general/assets/images/Gedung-Kuliah-I-Laboratorium-Politeknik-Negeri-Ketapang.jpg') }}" alt="">
+                                    <img src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}" alt="">
                                     @endif
                                 </div>
                             </div>
@@ -27,7 +27,10 @@
                                 <div class="right-content">
                                     <span>Tempat Uji Kompetensi</span>
                                     <h2>{{ $tuk->tuk }}</h2>
-                                    <h4><i class="fas fa-user"></i> Pengelola : {{ $tuk->pengelola }}</h4><br>
+                                    <h4><i class="fas fa-user"></i> Penanggung Jawab : {{ $tuk->pengelola }}</h4><br>
+                                    @if ($tuk->jenis_tuk)
+                                        <h6><i class="fas fa-tag"></i> Jenis TUK : {{ $tuk->jenis_tuk }}</h6><br>
+                                    @endif
                                     <h6>
                                         <i class="fas fa-map"></i> Alamat : {{ $tuk->alamat }}
                                     </h6>

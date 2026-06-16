@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    Elemen | Admin LSP POLITAP
+    Elemen | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -17,9 +17,9 @@
         </h4>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('skema.index') }}">List Skema</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('skema.index') }}">Unit Kompetensi</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('skema.index') }}">List Skema</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('skema.index') }}">Unit Kompetensi</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">List Elemen</li>
             </ol>
         </nav>

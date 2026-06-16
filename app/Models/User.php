@@ -23,6 +23,7 @@ class User extends Authenticatable
         'id',
         'role',
         'name',
+        'nik',
         'email',
         'password',
         'kode',

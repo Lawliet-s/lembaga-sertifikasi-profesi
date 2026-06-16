@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    Berita | Admin LSP POLITAP
+    Berita | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -19,7 +19,7 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Berita</li>
             </ol>
         </nav>
@@ -45,20 +45,11 @@
                         <div class="card-body">
                             <h4 class="card-title"><i class="fas fa-plus"></i> Tambah Berita</h4>
                             <div class="col-md-12">
-                                <label for="image-upload" id="image-label">Pilih Gambar , Format gambar JPG &nbsp;<i
+                                <label for="image-upload" id="image-label">Pilih Gambar&nbsp;<i
                                         class="fas fa-image"></i></label>
-                                <input accept=".jpg, ,jpeg" type="file" name="image">
+                                <input accept=".jpg,.jpeg,.png" type="file" name="image">
                             </div><br>
-                            <div class="col-md-12">
-                                <label for="">Kategori</label>
-                                <select class="form-control" name="kategori_id">
-                                    <option value="" holder>Pilih Kategori</option>
-                                    @foreach ($kategori as $result)
-                                        <option value="{{ $result->id }}">{{ $result->kategori }}</option>
-                                        select
-                                    @endforeach
-                                </select>
-                            </div><br>
+
                             <div class="col-md-12">
                                 <label for="">Status Berita</label>
                                 <select class="form-control" name="status">

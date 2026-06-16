@@ -14,7 +14,25 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.addons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
-    <link rel="shortcut icon" href="{{ asset('general/assets/images/lsp_small.jpg') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/asesi.css') }}">
+    <link rel="shortcut icon" href="{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}" />
+
+    <style>
+        :root {
+            --primary-color: {{ $site_setting->primary_color ?? '#9b0000e2' }};
+            --secondary-color: {{ $site_setting->secondary_color ?? '#f84949e2' }};
+        }
+        .btn-danger { background-color: var(--secondary-color); border-color: var(--secondary-color); }
+        .btn-danger:hover { background-color: var(--secondary-color); opacity: 0.85; border-color: var(--secondary-color); }
+        .btn-success { background-color: var(--primary-color); border-color: var(--primary-color); }
+        .btn-success:hover { background-color: var(--primary-color); opacity: 0.85; border-color: var(--primary-color); }
+        .text-danger { color: var(--secondary-color) !important; }
+        .bg-danger { background-color: var(--secondary-color) !important; }
+        .alert-danger { background-color: var(--secondary-color); color: #fff; border-color: var(--secondary-color); }
+        .alert-success { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+        .alert-danger .close, .alert-success .close { color: #fff; }
+        .sidebar .nav .nav-item.nav-profile .profile-name .name { color: var(--primary-color) !important; }
+    </style>
 </head>
 
 <body class="@yield('sidebar')">
@@ -25,12 +43,12 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo" href="{{ route('dashasesi.index') }}"><img
-                        src="{{ asset('assets/images/logo/lsp1.png') }}" alt="logo" /></a>
+                        src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}" alt="logo" /></a>
                 <!-- /////////////////////////////////// -->
                 <!-- LOGO MINI -->
                 <!-- /////////////////////////////////// -->
                 <a class="navbar-brand brand-logo-mini" href="#"><img
-                        src="{{ asset('assets/images/logo/mini3.png') }}" alt="logo" /></a>
+                        src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}" alt="logo" /></a>
             </div>
             <!-- /////////////////////////////////// -->
             <!-- MENU NAVIGASI -->
@@ -49,8 +67,7 @@
                     </li>
                     <li>
                         <div class="card-subtitle2">
-                            <h5> <i class="fas fa-user"></i> WEBSITE ASESI - LEMBAGA SERTIFIKASI PROFESI POLITEKNIK
-                                NEGERI KETAPANG</h5>
+                            <h5> <i class="fas fa-user"></i> WEBSITE ASESI - {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</h5>
                         </div>
                     </li>
                 </ul>
@@ -155,10 +172,33 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('edit') }}">
+                        <a class="nav-link" href="{{ route('profil.edit') }}">
                             <i class="fa fa-user-circle menu-icon"></i>
                             <span class="menu-title">Profil Anda</span>
                         </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" data-toggle="collapse" href="#sidebar-pendaftaran" aria-expanded="false"
+                            aria-controls="sidebar-pendaftaran">
+                            <i class="fa fa-file-alt menu-icon"></i>
+                            <span class="menu-title">Pendaftaran Sertifikasi</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="sidebar-pendaftaran">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('permohonan.create') }}">FR.APL.01</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('permohonan.frapl01') }}">Status Permohonan</a>
+                                </li>
+                            </ul>
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('apl02.index') }}">FR.APL.02</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item d-none d-lg-block">
                         <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false"
@@ -173,17 +213,7 @@
                                     <a class="nav-link" href="{{ route('info.skema') }}">Info Skema</a>
                                 </li>
                             </ul>
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('profil.edit2') }}">Pendaftaran Sertifikasi</a>
-                                </li>
-                            </ul>
-                            {{-- <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('formulirapl2.edit') }}">Registrasi
-                                Sertifikasi</a>
-                            </li>
-                        </ul> --}}
+
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('koleksi.sertifikat') }}">Koleksi
@@ -225,8 +255,7 @@
             <span class="text text-white text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022
                 &diamondsuit; All Right Reserved
                 </span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-white text-center">Designed & Developed By <a href="http://informatika.politap.ac.id/" target="_blank">Teknik Informatika</a> <a href="https://politap.ac.id/" target="_blank">Politeknik Negeri
-                Ketapang</a>.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-white text-center">&copy; {{ date('Y') }} {{ $site_setting->title ?? 'LSP' }}. All rights reserved.</span>
         </div>
     </footer>
 
@@ -236,6 +265,7 @@
     <!-- /////////////////////////////////// -->
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/vendor.bundle.addons.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
     <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('assets/js/misc.js') }}"></script>
@@ -268,6 +298,38 @@
     <script src="{{ asset('assets/js/modal-demo.js') }}"></script>
     <script src="{{ asset('assets/js/alerts.js') }}"></script>
     <script src="{{ asset('assets/js/avgrund.js') }}"></script>
+
+    @stack('scripts')
+
+    <script>
+        $(function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: {!! json_encode(session('success')) !!},
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '{{ $site_setting->primary_color ?? '#9b0000e2' }}'
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: {!! json_encode(session('error')) !!},
+                    timer: 5000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '{{ $site_setting->secondary_color ?? '#f84949e2' }}'
+                });
+            @endif
+        });
+    </script>
 </body>
 
 

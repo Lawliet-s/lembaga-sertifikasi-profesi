@@ -17,7 +17,7 @@
             <!-- ----------------------- HEADER  ----------------------- -->
             <div class="card-header">
                 <h3 class="card-title font-weight-bold">Rekap Pendaftaran Sertifikasi Skema</h3><br>
-                <h3 class="card-title font-weight-bold">Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</h3>
+                <h3 class="card-title font-weight-bold">{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</h3>
             </div>
             <div class="card-body">
                 <p class="font-weight-bold">Data Sertifikasi</p>
@@ -50,8 +50,8 @@
                         <td style="width: 1000px">{{ $validasi->user_name }}</td>
                     </tr>
                     <tr>
-                        <td style="width: 600px" class="text-muted">NIM</td>
-                        <td style="width: 1000px">{{ $validasi->nim }}</td>
+                        <td style="width: 600px" class="text-muted">NIK</td>
+                        <td style="width: 1000px">{{ $validasi->nik }}</td>
                     </tr>
                     <tr>
                         <td style="width: 600px" class="text-muted">Tempat Lahir</td>
@@ -99,11 +99,11 @@
                     </tr>
                     <tr>
                         <td style="width: 600px" class="text-muted">Jurusan</td>
-                        <td style="width: 1000px">{{ $validasi->jurusan->jurusan }}</td>
+                        <td style="width: 1000px">{{ $validasi->jurusan ? $validasi->jurusan->jurusan : 'Tidak ditentukan' }}</td>
                     </tr>
                     <tr>
                         <td style="width: 600px" class="text-muted">Semester Kuliah</td>
-                        <td style="width: 1000px">{{ $validasi->semester->semester }}</td>
+                        <td style="width: 1000px">{{ $validasi->semester ? $validasi->semester->semester : 'Tidak ditentukan' }}</td>
                     </tr>
                 </table><br>
                 <p class="font-weight-bold">Data Pekerjaan Sekarang</p>

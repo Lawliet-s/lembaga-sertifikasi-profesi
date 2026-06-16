@@ -17,8 +17,8 @@ class Dashboard_adminController extends Controller
 
     public function index()
     {
-        $datatuk = Tuk::where('id', '>', 1)->count();   
-        $dataasesor = Asesor::where('id', '>', 1)->count();  
+        $datatuk = Tuk::count();   
+        $dataasesor = Asesor::count();  
         $dataskema = Skema::all()->count();  
         $datauser = User::all()->count();
         $datasertifikat = Data_register::where('status', "<h4 style='color: rgb(0, 0, 0)'>Sertifikasi Selesai</h4>")->count();        

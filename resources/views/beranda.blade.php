@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    LSP Politeknik Negeri Ketapang
+    {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('home')
@@ -40,9 +40,7 @@
                         <h4>Selamat Bergabung, {{ Auth::user()->name }}....</h4>
                         <span>Formulir pengisian biodata registrasi disertai bukti lengkap secara online. </span>
                     </div>
-                    <div class="col-md-4">
-                        <a href="{{ route('profil.edit2') }}" class="border-button">Daftar Sertifikasi</a>
-                    </div>
+
                 </div>
             @else
                 <div class="row">
@@ -63,7 +61,7 @@
     <div class="more-info">
         <div class="container">
             <div class="section-heading">
-                <h2>Tentang LSP-POLITAP<em></em></h2>
+                <h2>Tentang LSP<em></em></h2>
                 <span>▬▬▬▬▬<em>▬▬▬▬▬</em></span>
             </div>
             <div class="row">
@@ -72,33 +70,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="left-content">
-                                    <span>Lembaga Sertifikasi Profesi Pihak Kesatu Politeknik Negeri Ketapang</span>
+                                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                                     <ul class="u-custom-font u-font-arial u-text u-text-2"
                                         data-animation-name="customAnimationIn" data-animation-duration="1000">
-                                        <li> Lembaga Sertifikasi Profesi (LSP) Politeknik Negeri Ketapang adalah lembaga
-                                            sertifikasi profesi yang telah memperoleh sertifikat lisensi No.
-                                            BNSP-LSP-1214-ID dari
-                                            Badan Nasional Sertifikasi Profesi
-                                            (BNSP). dan memiliki Nomor SK
-                                            KEP. 0429/BNSP/IV/2018.</li><br>
-                                        <li>Sebagai lembaga pelaksanaan kegiatan sertifikasi profesi kategori P1, skema
-                                            yang
-                                            dimiliki LSP&nbsp; Politeknik Negeri Ketapang diselaraskan dengan Kerangka
-                                            Kualifikasi
-                                            Nasional Indonesia (KKNI) dan Standar Kualifikasi Kerja
-                                            Nasional Indonesia (SKKNI).&nbsp; </li><br>
-                                        <li>
-                                            Memiliki
-                                            10 skema, LSP&nbsp; Politeknik Negeri Ketapang siap melaksanakan uji
-                                            kompetensi
-                                            pada seluruh
-                                            mahasiswa Politeknik Negeri Ketapang dari berbagai program
-                                            studi dalam rangka menyiapkan lulusan Politeknik Negeri Ketapang yang
-                                            memiliki kompetensi mumpuni sesuai bidangnya dan memiliki nilai lebih di
-                                            pasar tenaga kerja
-                                            baik
-                                            nasional maupun Internasional.
-                                        </li><br>
+                                        {!! $profil ? $profil->profil : '' !!}
                                     </ul>
                                     <a href="{{ route('tentang') }}" class="filled-button">Selengkapnya</a>
                                 </div>
@@ -138,21 +113,21 @@
     </div>
 
     <!-- Layanan -->
-    <div style="background-image: url('{{ asset('general/assets/images/back1.jpg') }}')" class="fun-facts">
+    <div style="background-image: url('{{ asset(optional($site_setting)->background_image ?? 'general/assets/images/back1.jpg') }}')" class="fun-facts">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="left-content">
                         <h2>Layanan yang tersedia <br><em></em></h2>
                         <p>
-                            Dalam melaksanakan tugas dan fungsi LSP P1-POLITAP mengacu pada pedoman yang dikeluarkan oleh BNSP. Dalam pedoman tersebut ditetapkan persyaratan yang harus dipatuhi untuk menjamin agar lembaga sertifikasi menjalankan sistem sertifikasi secara konsisten dan profesional, sehingga dapat diterima di tingkat nasional yang relevan demi kepentingan pengembangan sumber daya manusia dalam aspek peningkatan kualitas dan perlindungan tenaga kerja.
+                            Dalam melaksanakan tugas dan fungsi LSP mengacu pada pedoman yang dikeluarkan oleh .... Dalam pedoman tersebut ditetapkan persyaratan yang harus dipatuhi untuk menjamin agar lembaga sertifikasi menjalankan sistem sertifikasi secara konsisten dan profesional, sehingga dapat diterima di tingkat nasional yang relevan demi kepentingan pengembangan sumber daya manusia dalam aspek peningkatan kualitas dan perlindungan tenaga kerja.
                         </p>                        
                         {{-- <a href="{{ route('client_skema') }}" class="filled-button">Selengkapnya</a> --}}
                     </div>
                 </div>
                 <div class="col-md-6 align-self-center">
                     <p>
-                        Saat ini LSP P1-POLITAP memiliki :
+                        Saat ini LSP memiliki :
                     </p>
                     <div class="row">
                         <div class="col-md-6">
@@ -197,7 +172,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-heading">
-                        <h2>Pengelola LSP-POLITAP<em> </em></h2>
+                        <h2>Pengelola LSP<em> </em></h2>
                         <span>▬▬▬▬▬<em>▬▬▬▬▬</em></span>
                     </div>
                 </div>
@@ -276,7 +251,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="section-heading">
+                    {{-- <div class="section-heading">
                         <h2>Lembaga Tertaut<em> </em></h2>
                         <span>▬▬▬▬▬<em>▬▬▬▬▬</em></span>
                     </div>
@@ -290,20 +265,52 @@
                                     target="_blank" rel="noopener noreferrer"><img
                                         src="{{ asset('general/assets/images/kemendikbud_small.png') }}"
                                         height="100px"></a></td>
-                            <td align="center" style="width: 200px"><a href="https://politap.ac.id/" target="_blank"
+                            <td align="center" style="width: 200px"><a href="{{ url('/') }}" target="_blank"
                                     rel="noopener noreferrer"><img
-                                        src="{{ asset('general/assets/images/politap_small.png') }}"
+                                        src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}"
                                         height="100px"></a>
                             </td>
                             <td align="center" style="width: 200px"><a href="{{ route('/') }}"><img
                                         src="{{ asset('general/assets/images/lsp_small.jpg') }}" height="100px"></a>
                             </td>
                         </tr>
-                    </table>
+                    </table> --}}
                 </div>
             </div>
         </div>
     </div>
     </div>
     <!-- ***** Bagian Akhir Konten ***** -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pendaftaran Berhasil!',
+                    text: {!! json_encode(session('success')) !!},
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '{{ $site_setting->primary_color ?? '#9b0000e2' }}'
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Pendaftaran Gagal',
+                    text: {!! json_encode(session('error')) !!},
+                    timer: 5000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '{{ $site_setting->secondary_color ?? '#f84949e2' }}'
+                });
+            @endif
+        });
+    </script>
 @endsection

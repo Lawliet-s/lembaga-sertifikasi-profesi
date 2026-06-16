@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Skema | LSP POLITAP
+    Skema | LSP
 @endsection
 
 @section('layanan')
@@ -25,12 +25,12 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1>Skema Sertifikasi</h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
+                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                 </div>
             </div>
         </div>
@@ -47,10 +47,11 @@
                     <div class="card-body">
                         <table id="example" class="table table-striped display">
                             <thead class="mdb-color darken-3">
-                                <tr style="background-color: #c20303c5" class="text-white">
+                                <tr style="background-color: var(--primary-color)" class="text-white">
                                     <th>#</th>
                                     <th>Kode Skema</th>
                                     <th>Nama Skema</th>
+                                    <th>Status</th>
                                     <th>Lihat Detail</th>
                                 </tr>
                             </thead>
@@ -60,6 +61,7 @@
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $asu->kode_skema }}</td>
                                         <td>{{ $asu->skema }}</td>
+                                        <td>{{ $asu->status_id }}</td>
                                         <td><a href="{{ route('skema_detail', Crypt::encryptString($asu->id)) }}"
                                                 class="btn btn-info"><i class="fa fa-search"></i> Lihat</a></td>
                                     </tr>

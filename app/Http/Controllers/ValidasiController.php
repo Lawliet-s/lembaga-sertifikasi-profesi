@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Asesor;
 use App\Models\Data_register;
+use App\Models\Permohonan;
+use App\Models\Skema;
 use App\Models\Tuk;
 use App\Models\Upload_file;
 use App\Models\Xnxx;
@@ -49,7 +51,8 @@ class ValidasiController extends Controller
         $identitas = Upload_file::all();
         $tuk = Tuk::all();
         $asesor = Asesor::all();
-        return view('admin/register/show', compact('validasi', 'tuk', 'asesor', 'identitas', 'xnxx'));
+        $skema = Skema::with('unikoms')->find((int) $validasi->skema_id);
+        return view('admin/register/show', compact('validasi', 'tuk', 'asesor', 'identitas', 'xnxx', 'skema'));
     }
 
 
@@ -160,44 +163,61 @@ class ValidasiController extends Controller
     }
 
 
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => ['required', 'in:pending,diverifikasi,ditolak,revisi'],
+        ]);
+
+        $statusMap = [
+            'pending' => "<h4 style='color: green'>Menunggu Validasi...</h4>",
+            'diverifikasi' => "<h4 style='color: rgb(34, 123, 138)'>Pendaftaran Divalidasi</h4>",
+            'ditolak' => "<h4 style='color: rgb(141, 7, 7)'>Pendaftaran Ditolak</h4>",
+            'revisi' => "<h4 style='color: rgb(255, 165, 0)'>Revisi Data</h4>",
+        ];
+
+        $data = [
+            'status' => $statusMap[$request->status],
+        ];
+
+        if ($request->filled('keterangan')) {
+            $data['keterangan'] = $request->keterangan;
+        }
+
+        Data_register::whereId($id)->update($data);
+
+        // Also update related Permohonan record
+        $dr = Data_register::find($id);
+        if ($dr) {
+            $permohonan = Permohonan::where('user_id', (int) $dr->user_id)
+                ->where('skema_id', (int) $dr->skema_id)
+                ->latest()
+                ->first();
+            if ($permohonan) {
+                $permohonanStatusMap = [
+                    'pending' => 'pending',
+                    'diverifikasi' => 'diverifikasi',
+                    'ditolak' => 'ditolak',
+                    'revisi' => 'revisi',
+                ];
+                $permohonan->update([
+                    'status' => $permohonanStatusMap[$request->status],
+                    'catatan' => $request->filled('keterangan') ? $request->keterangan : $permohonan->catatan,
+                ]);
+            }
+        }
+
+        $label = ucfirst($request->status);
+        return back()->with('success', "Status pendaftaran berhasil diubah menjadi: $label");
+    }
+
+
     public function destroy($id){
         $validasi = Data_register::findorfail($id);
         $validasi->delete();
         return back()->with('success', 'Peserta Asesi Berhasil dihapus');
     }
 
-
-    public function koreksiformulir($id){
-        $validasi = Data_register::findorfail($id);
-        $xnxx = Xnxx::all();
-        $identitas = Upload_file::all();
-        $tuk = Tuk::all();
-        $asesor = Asesor::all();
-        return view('admin/register/koreksi', compact('validasi', 'tuk', 'asesor', 'identitas', 'xnxx'));
-    }
-
-    public function koreksiformulir_update(Request $request, $id)
-    {
-        // dd($request->all());
-        $validasi_data = [
-            'kode' => $request->kode,
-            'koreksi' => $request->koreksi
-        ];
-        Upload_file::whereId($id)->update($validasi_data);
-        return back()->with('success', 'Koreksi Data Formulir Berhasil');
-    }
-
-
-    public function koreksiformulirapl2_update(Request $request, $id)
-    {
-        // dd($request->all());
-        $validasi_data = [
-            'kode' => $request->kode,
-            'koreksi' => $request->koreksi
-        ];
-        Xnxx::whereId($id)->update($validasi_data);
-        return back()->with('success', 'Koreksi Data Formulir Berhasil');
-    }
 
     public function backup_store(Request $request)
     {
@@ -208,7 +228,7 @@ class ValidasiController extends Controller
             'id' => ['required', 'unique:data_registers,id'],
             // 'sex_id' => ['required'],
             'kode_skema' => ['required'],
-            'nim' => ['required'],
+            'nik' => ['required'],
             // 'tmpt_lahir' => ['required'],
             // 'no_hp' => ['required'],
             // 'semester_id' => ['required'],
@@ -233,7 +253,7 @@ class ValidasiController extends Controller
             $data_register = Data_register::create([
                 'id' => $request->id,
                 'kode' => $request->kode,
-                'nim' => $request->nim,
+                'nik' => $request->nik,
                 'skema_name' => $request->skema_name,
                 'tuk_id' => $request->tuk_id,
                 'kode_skema' => $request->kode_skema,

@@ -11,7 +11,7 @@ class TukController extends Controller
 {
 
     public function index() {
-        $tuk = Tuk::where('id', '>', 1)->get();
+        $tuk = Tuk::all();
         return view('admin/tuk/index', compact('tuk'));
     }
 
@@ -30,7 +30,7 @@ class TukController extends Controller
             'alamat' => ['required'],
             // 'image' => ['required']
         ]);
-        if ($request->has('image')) {
+        if ($request->hasFile('image')) {
             $image = $request->image;
             $new_image = time().$image->getClientOriginalName();
             $image->move('uploads/tuk/', $new_image);
@@ -39,6 +39,7 @@ class TukController extends Controller
             'kode' => $request->kode,
             'pengelola' => $request->pengelola,
             'alamat' => $request->alamat,
+            'jenis_tuk' => $request->jenis_tuk,
             'image' => 'uploads/tuk/'.$new_image,
         ]);
         }
@@ -48,6 +49,7 @@ class TukController extends Controller
             'kode' => $request->kode,
             'pengelola' => $request->pengelola,
             'alamat' => $request->alamat,
+            'jenis_tuk' => $request->jenis_tuk,
         ]);
         }
         return redirect()->route('tuk.index')->with('success', 'TUK Berhasil Ditambahkan');
@@ -57,7 +59,7 @@ class TukController extends Controller
     public function update(Request $request, $id)
     {
         $tuk = Tuk::findorfail($id);
-        if ($request->has('image')) {
+        if ($request->hasFile('image')) {
             $image = $request->image;
             $new_image = time().$image->getClientOriginalName();
             $image->move('uploads/tuk/', $new_image);
@@ -66,6 +68,7 @@ class TukController extends Controller
                 'kode' => $request->kode,
                 'pengelola' => $request->pengelola,
                 'alamat' => $request->alamat,
+                'jenis_tuk' => $request->jenis_tuk,
                 'image' => 'uploads/tuk/'.$new_image,
             ];
         }
@@ -75,6 +78,7 @@ class TukController extends Controller
                 'kode' => $request->kode,
                 'pengelola' => $request->pengelola,
                 'alamat' => $request->alamat,
+                'jenis_tuk' => $request->jenis_tuk,
             ];
         }
         $tuk->update($tuk_data);

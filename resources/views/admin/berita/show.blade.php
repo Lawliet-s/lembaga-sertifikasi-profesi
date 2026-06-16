@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $berita->title }} | Admin LSP POLITAP
+    {{ $berita->title }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -19,8 +19,8 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('berita.index') }}">Berita</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('berita.index') }}">Berita</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page"> {{ $berita->id }}</li>
             </ol>
         </nav>
@@ -48,20 +48,10 @@
                         <div class="card-body">
                             <h4 class="card-title"><i class="fas fa-plus"></i> Edit Berita</h4>
                             <div class="col-md-12">
-                                <label for="image-upload" id="image-label">Pilih Gambar , Format gambar JPG <i class="fas fa-image"></i></label>
-                                <input type="file" name="image" accept=".jpg, .jpeg">
+                                <label for="image-upload" id="image-label">Pilih Gambar<i class="fas fa-image"></i></label>
+                                <input type="file" name="image" accept=".jpg,.jpeg,.png">
                             </div><br>
-                            <div class="col-md-12">
-                                <label for="">Kategori</label>
-                                <select class="form-control" name="kategori_id">
-                                    <option value="" holder></option>
-                                    @foreach ($kategori as $result)
-                                        <option value="{{ $result->id }}"
-                                            @if ($berita->kategori_id == $result->id) selected @endif>{{ $result->kategori }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div><br>
+
                             <div class="col-md-12">
                                 <label for="">Status Berita</label>
                                 <select class="form-control" name="status">

@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-{{ $file->file }} | Admin LSP POLITAP
+{{ $file->file }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -16,8 +16,8 @@
         </h4>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('file.index') }}">Upload File Dokumen</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('file.index') }}">Upload File Dokumen</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">{{ $file->id }}</li>
             </ol>
         </nav>

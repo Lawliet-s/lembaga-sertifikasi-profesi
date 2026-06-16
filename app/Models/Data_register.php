@@ -9,6 +9,9 @@ class Data_register extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+    protected $keyType = 'int';
+
     protected $fillable = [
         'id',
         'id_skema',
@@ -41,6 +44,8 @@ class Data_register extends Model
         'ktm',
         'lain',
         'koreksi',
+        'validasi_data',
+        'rekomendasi_data',
         'date',
         'time',
         'tuk_id',
@@ -62,7 +67,10 @@ class Data_register extends Model
 
     protected $dates = ['tgl_lahir', 'date', 'created_at', 'updated_at'];
 
-    // protected $dates = ['created_at'];
+    protected $casts = [
+        'validasi_data' => 'array',
+        'rekomendasi_data' => 'array',
+    ];
 
     public function xnxxes(){
         return $this->hasMany(Xnxx::class);
@@ -91,5 +99,13 @@ class Data_register extends Model
 
     public function tuk(){
         return $this->belongsTo(Tuk::class);
+    }
+
+    public function penilaians(){
+        return $this->hasMany(Penilaian::class, 'data_register_id');
+    }
+
+    public function observasis(){
+        return $this->hasMany(Observasi::class, 'data_register_id');
     }
 }

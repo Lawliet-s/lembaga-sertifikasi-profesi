@@ -9,7 +9,7 @@
     <!-- /////////////////////////////////// -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
             <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Tutorial Pendaftaran Sertifikasi</li>
         </ol>
     </nav>

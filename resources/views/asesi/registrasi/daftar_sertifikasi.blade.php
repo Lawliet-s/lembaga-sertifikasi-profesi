@@ -1,7 +1,7 @@
 @extends('layout/asesi')
 
 @section('judul')
-    Daftar Skema | LSP-POLITAP
+    Daftar Skema {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -19,7 +19,7 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Tabel Skema</li>
             </ol>
         </nav>
@@ -157,10 +157,8 @@
                             {{-- <--------------- DATA PRIBADI ---------------> --}}
                             <input type="hidden" class="form-control" name="user_name"
                                 value="{{ old('name', Auth::user()->name) }}">
-                            <input type="hidden" maxlength="25" class="form-control" name="nim"
-                                value="{{ old('email', Auth::user()->email) }}">
-                            <input type="hidden" maxlength="25" class="form-control" name="nim"
-                                value="{{ old('email', Auth::user()->email) }}">
+                            <input type="hidden" maxlength="50" class="form-control" name="nik"
+                                value="{{ old('nik', Auth::user()->nik) }}">
                             <input type="hidden" maxlength="25" class="form-control" name="sex_id"
                                 value="{{ old('email', Auth::user()->sex_id) }}">
                             <input type="hidden" class="form-control" name="tgl_lahir"

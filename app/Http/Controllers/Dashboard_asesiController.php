@@ -21,7 +21,7 @@ class Dashboard_asesiController extends Controller
         $info2 = Info2::all();
         $skema = Skema::where('status_id', '1')->get();
         $jurusan = Jurusan::all();
-        $datasertifikat = Data_register::where('nim', auth()->user()->email)
+        $datasertifikat = Data_register::where('nik', auth()->user()->nik)
             ->where('status', "<h4 style='color: rgb(0, 0, 0)'>Sertifikasi Selesai</h4>")->count();
         $upload = Upload_file::where('user_id', auth()->user()->id)->get();
         $datareg = Data_register::where('user_id', auth()->user()->id)
@@ -36,9 +36,9 @@ class Dashboard_asesiController extends Controller
         $datareg3 = Data_register::where('user_id', auth()->user()->id)
             ->where('status', "<h4 style='color: rgb(141, 7, 7)'>Pendaftaran Ditolak</h4>")
             ->get();
-        $datareg4 = Data_register::where('nim', auth()->user()->email)
+        $datareg4 = Data_register::where('nik', auth()->user()->nik)
             ->where('status', "<h4 style='color: rgb(0, 0, 0)'>Sertifikasi Selesai</h4>")->get();
-        $datareg5 = Data_register::where('nim', auth()->user()->email)
+        $datareg5 = Data_register::where('nik', auth()->user()->nik)
             ->where('status', "<h4 style='color: #000'>Pendaftaran Sementara Diblokir</h4>")->get();
         return view('asesion', compact
         (

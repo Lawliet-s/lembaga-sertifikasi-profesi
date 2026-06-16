@@ -5,7 +5,7 @@
 @endsection
 
 @section('judul')
-    Mengambil Formulir | LSP-POLITAP
+    Mengambil Formulir {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('isi')
@@ -17,7 +17,7 @@
         </h4>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Mengambil Formulir</li>
             </ol>
         </nav>

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 class AsesorController extends Controller
 {
     public function index(){
-        $asesor = Asesor::where('id', '>', 1)->get();
+        $asesor = Asesor::all();
         $skema = Skema::all();
         return view('admin/asesor/index', compact('skema','asesor'));
     }

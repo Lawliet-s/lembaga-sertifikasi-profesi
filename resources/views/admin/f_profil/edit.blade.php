@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    Edit Profil LSP-POLITAP | Admin LSP POLITAP
+    Edit Profil {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -13,15 +13,15 @@
     {{-- <---------------------- PAGE HEADER ----------------------> --}}
     <div class="page-header">
         <h3>
-            <i class="fas fa-cogs"></i> Edit Profil LSP - POLITAP
+            <i class="fas fa-cogs"></i> Edit Profil 
         </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item">
-                    <a href="{{ route('f_profil.index') }}">LSP P1-POLITAP</a>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item">
+                    <a href="{{ route('f_profil.index') }}">LSP </a>
                 </li>
-                <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Edit Profil LSP-POLITAP</li>
+                <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Edit Profil </li>
             </ol>
         </nav>
     </div><br>
@@ -30,32 +30,26 @@
     {{-- <---------------------- EDIT PROFIL ----------------------> --}}
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('f_profil.update', $profil->id) }}" enctype="multipart/form-data" method="POST"
+            <form action="{{ route('f_profil.update', $profil->id) }}" method="POST"
                 class="forms-sample">
                 @csrf
                 @method('patch')
                 <div class="form-group">
-                    <label class="font-weight-bold text-primary" for="exampleTextarea1">Judul Profil LSP P1-POLITAP</label>
-                    <textarea maxlength="1000" class="summernote" id="exampleTextarea1" name="profil">{{ $profil->profil }}</textarea>
+                    <label class="font-weight-bold text-primary">Isi Tentang</label>
+                    <textarea class="summernote" name="profil">{{ $profil->profil }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-bold text-primary" for="exampleTextarea1">Isi Profil LSP P1-POLITAP</label>
-                    <textarea maxlength="1000" class="summernote" id="exampleTextarea1" name="isi">{{ $profil->isi }}</textarea>
+                    <label class="font-weight-bold text-primary">Visi</label>
+                    <textarea class="summernote" name="visi">{{ $profil->visi }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-bold text-primary" for="exampleTextarea1">Visi LSP P1-POLITAP</label>
-                    <textarea maxlength="1000" class="summernote" id="exampleTextarea1" name="visi">{{ $profil->visi }}</textarea>
+                    <label class="font-weight-bold text-primary">Misi</label>
+                    <textarea class="summernote" name="misi">{{ $profil->misi }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-bold text-primary" for="exampleTextarea1">Misi LSP P1-POLITAP</label>
-                    <textarea maxlength="1000" class="summernote" id="exampleTextarea1" name="misi">{{ $profil->misi }}</textarea>
+                    <label class="font-weight-bold text-primary">Motto</label>
+                    <textarea class="summernote" name="motto">{{ $profil->motto }}</textarea>
                 </div>
-                <div class="form-group">
-                    <label class="font-weight-bold text-primary" for="exampleTextarea1">Motto LSP P1-POLITAP</label>
-                    <textarea maxlength="1000" class="summernote" id="exampleTextarea1" name="motto">{{ $profil->motto }}</textarea>
-                </div>
-                <label class="font-weight-bold text-primary" for="input">Logo Politap</label>
-                <input type="file" id="input" class="form-control" accept=".png" name="image"><br>
                 <button type="submit" class="btn btn-rounded btn-info btn-icon-text">
                     <i class="far fa-check-square btn-icon-prepend"></i>
                     Update

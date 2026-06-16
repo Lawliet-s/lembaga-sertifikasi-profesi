@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Galeri | LSP POLITAP
+    Galeri | LSP
 @endsection
 
 @section('galeri')
@@ -10,7 +10,7 @@
 @section('css')
     <style>
         em {
-            color: #b00909
+            color: var(--secondary-color);
         }
 
         .flip-boxes {
@@ -57,7 +57,8 @@
         }
 
         .flip-box .back {
-            background-color: #a50b0bb5;
+            background-color: var(--primary-color);
+            opacity: 0.85;
             position: absolute;
             left: 0;
             top: 0;
@@ -113,13 +114,13 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fas fa-images"></i> Galeri Kegiatan </h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
-                </div>
+                        <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
+                    </div>
             </div>
         </div>
     </div>

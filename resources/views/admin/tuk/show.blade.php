@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $tuk->tuk }} | Admin LSP POLITAP
+    {{ $tuk->tuk }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Keterangan</label>
+                                    <label class="col-sm-3 col-form-label">Alamat</label>
                                     <div class="col-sm-9">
                                         <input type="text" value="{{ $tuk->alamat }}" maxlength="100" name="alamat"
                                             class="form-control" />
@@ -86,11 +86,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Pengelola</label>
+                                    <label class="col-sm-3 col-form-label">Penanggung Jawab</label>
                                     <div class="col-sm-9">
                                         <input type="text" value="{{ $tuk->pengelola }}" maxlength="100"
                                             name="pengelola" class="form-control" />
                                         @error('pengelola')
+                                            <div class="text-danger mt-2 text-sm">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Jenis TUK</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" value="{{ $tuk->jenis_tuk }}" maxlength="100"
+                                            name="jenis_tuk" class="form-control" />
+                                        @error('jenis_tuk')
                                             <div class="text-danger mt-2 text-sm">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -113,13 +123,14 @@
                 <img class="card-img-top" src="{{ asset($tuk->image) }}" alt="Card image cap">
             @else
                 <img class="card-img-top"
-                    src="{{ asset('general/assets/images/Gedung-Kuliah-I-Laboratorium-Politeknik-Negeri-Ketapang.jpg') }}"
+                    src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}"
                     alt="Card image cap">
             @endif
             <div class="card-body">
                 <h4 class="card-title">Nama TUK : {{ $tuk->tuk }}</h4>
                 <h4 class="card-title">Kode TUK : {{ $tuk->kode }}</h4>
-                <h4 class="card-title">Pengelola : {{ $tuk->pengelola }}</h4>
+                <h4 class="card-title">Penanggung Jawab : {{ $tuk->pengelola }}</h4>
+                <h4 class="card-title">Jenis TUK : {{ $tuk->jenis_tuk ?? '-' }}</h4>
                 <p class="card-title">Alamat : {!! $tuk->alamat !!}</p>
             </div>
         </div>

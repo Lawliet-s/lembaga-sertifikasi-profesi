@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Pemegang Sertifikat | LSP-POLITAP
+    Pemegang Sertifikat {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ asset('client/Skema.css') }}" media="screen">

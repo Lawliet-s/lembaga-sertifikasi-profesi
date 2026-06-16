@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Logo | LSP-POLITAP
+    Logo {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ asset('client/css/Logo.css') }}" media="screen">
@@ -15,8 +15,7 @@
                             <div class="u-container-layout u-valign-top u-container-layout-1">
                                 <h1 class="u-custom-font u-font-merriweather u-text u-text-default u-title u-text-1"><span
                                         class="u-file-icon u-icon u-text-white u-icon-1"><img
-                                            src="{{ asset('images/logo3/14.png') }}" alt=""></span>Logo LSP -
-                                    POLITAP
+                                            src="{{ asset('images/logo3/14.png') }}" alt=""></span>Logo {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
                                 </h1>
                             </div>
                         </div>
@@ -30,12 +29,12 @@
         <div class="u-clearfix u-sheet u-sheet-1">
             <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-wrap u-layout-wrap-1">
                 <div class="u-layout" style="">
-                    @foreach ($logo as $asu)
+                    @if ($logo)
                     <div class="u-layout-row" style="">
                         <div class="u-align-center u-container-style u-layout-cell u-right-cell u-size-24 u-size-xs-60 u-layout-cell-1"
                             src="">
                             <div class="u-container-layout u-container-layout-1" src="">
-                                <img class="u-image u-image-1" src="{{ asset($asu->image) }}" data-image-width="362"
+                                <img class="u-image u-image-1" src="{{ asset($site_setting->logo ?? '') }}" data-image-width="362"
                                     data-image-height="220">
                             </div>
                         </div>
@@ -43,12 +42,12 @@
                             src="">
                             <div class="u-container-layout u-valign-top u-container-layout-2">
                                 <p class="u-align-center u-text u-text-1">
-                                    {!! $asu->isi !!}
+                                    {!! $logo->isi !!}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>

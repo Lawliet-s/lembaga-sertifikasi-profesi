@@ -19,7 +19,23 @@
     <link rel="stylesheet" href="{{ asset('assets2/modules/codemirror/lib/codemirror.css') }}">
     <link rel="stylesheet" href="{{ asset('assets2/modules/codemirror/theme/duotone-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('assets2/modules/jquery-selectric/selectric.css') }}">
-    <link rel="shortcut icon" href="{{ asset('general/assets/images/shortcut.jpg') }}" />
+    <link rel="shortcut icon" href="{{ asset($site_setting->favicon ?? 'general/assets/images/shortcut.jpg') }}" />
+
+    <style>
+        :root {
+            --primary-color: {{ $site_setting->primary_color ?? '#9b0000e2' }};
+            --secondary-color: {{ $site_setting->secondary_color ?? '#f84949e2' }};
+        }
+        .btn-danger { background-color: var(--secondary-color); border-color: var(--secondary-color); }
+        .btn-danger:hover { background-color: var(--secondary-color); opacity: 0.85; border-color: var(--secondary-color); }
+        .btn-success { background-color: var(--primary-color); border-color: var(--primary-color); }
+        .btn-success:hover { background-color: var(--primary-color); opacity: 0.85; border-color: var(--primary-color); }
+        .text-danger { color: var(--secondary-color) !important; }
+        .bg-danger { background-color: var(--secondary-color) !important; }
+        .alert-danger { background-color: var(--secondary-color); color: #fff; border-color: var(--secondary-color); }
+        .alert-success { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+        .alert-danger .close, .alert-success .close { color: #fff; }
+    </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 </head>
@@ -32,12 +48,12 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo" href="{{ route('admin') }}"><img
-                        src="{{ asset('assets/images/logo/lsp1.png') }}" alt="logo" /></a>
+                        src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}" alt="logo" /></a>
                 <!-- /////////////////////////////////// -->
                 <!-- LOGO MINI -->
                 <!-- /////////////////////////////////// -->
                 <a class="navbar-brand brand-logo-mini" href="{{ route('admin') }}"><img
-                        src="{{ asset('assets/images/logo/mini3.png') }}" alt="logo" /></a>
+                        src="{{ asset($site_setting->logo ?? 'assets/images/logo/mini3.png') }}" alt="logo" /></a>
             </div>
             <!-- /////////////////////////////////// -->
             <!-- MENU NAVIGASI -->
@@ -56,8 +72,7 @@
                     </li>
                     <li>
                         <div class="card-subtitle2 text-white">
-                            <h5><i class="fas fa-cogs"></i>&nbsp; ADMINISTRASI WEBSITE - LEMBAGA SERTIFIKASI PROFESI
-                                POLITEKNIK NEGERI KETAPANG
+                            <h5><i class="fas fa-cogs"></i>&nbsp; ADMINISTRASI WEBSITE
                             </h5>
                         </div>
                     </li>
@@ -72,18 +87,6 @@
                             <i class="fas fa-home mx-0"></i>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link count-indicator" id="notificationDropdown" target="_blank"
-                            href="{{ route('dashasesi.index') }}">
-                            <i class="fas fa-user mx-0"></i>
-                        </a>
-                    </li> --}}
-                    {{-- <li class="nav-item">
-                        <a class="nav-link count-indicator" id="notificationDropdown" target="_blank"
-                            href="http://localhost/phpmyadmin/index.php?route=/database/structure&server=1&db=lspp1-politap">
-                            <i class="fas fa-database mx-0"></i>
-                        </a>
-                    </li> --}}
                     <li style="color: #fff" class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown"
                             aria-expanded="false">
@@ -210,8 +213,8 @@
                         <div class="collapse" id="sidebar-layouts2">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ Route('registrasi.baru') }}">Pendaftaran
-                                        Terbaru</a>
+                                    <a class="nav-link" href="{{ route('registrasi.baru') }}">
+                                        Pendaftaran Terbaru </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('list.valid') }}">Proses Sertifikasi</a>
@@ -243,35 +246,13 @@
                                     <a class="nav-link" href="{{ Route('prodi.index') }}">Program Studi</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ Route('jurusan.index') }}">Jurusan</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ Route('asesor.index') }}">Asesor</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ Route('tuk.index') }}">TUK</a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('unikom.index') }}">Unit Kompetensi</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('asesmen.index') }}">Elemen
-                                    </a>
-                                </li> -->
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts22" aria-expanded="false"
-                            aria-controls="sidebar-layouts">
-                            <i class="fas fa-file-code  menu-icon"></i>
-                            <span class="menu-title"> Format Formulir</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="sidebar-layouts22">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('form1.index') }}">Formulir APL-01</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('404') }}">Formulir APL-02</a>
                                 </li>
                             </ul>
                         </div>
@@ -364,6 +345,18 @@
                             </li>
                             <li>
                                 <div class="btn btn-primary btn-block">
+                                    <a href="{{ route('site_setting.index') }}" class="text text-white"><i
+                                            class="fas fa-cogs"></i> Pengaturan Situs</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="btn btn-primary btn-block">
+                                    <a href="{{ route('auth.images.index') }}" class="text text-white"><i
+                                            class="fas fa-image"></i> Gambar Auth</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="btn btn-primary btn-block">
                                     <a href="{{ route('beranda_img2.index') }}" class="text text-white"><i
                                             class="fas fa-users"></i> Pengelola</a>
                                 </div>
@@ -399,11 +392,8 @@
     {{-- <----------------------  FOOTER----------------------> --}}
     <footer class="footer">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text text-white text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022
-                &diamondsuit; All Right Reserved
+            <span class="text text-white text-center text-sm-left d-block d-sm-inline-block">{!! $site_setting->footer_text ?? 'Copyright © 2022 &diamondsuit; All Right Reserved' !!}
                 </span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-white text-center">Designed & Developed By <a href="http://informatika.politap.ac.id/" target="_blank">Teknik informatika</a> <a href="https://politap.ac.id/" target="_blank">Politeknik Negeri
-                Ketapang</a>.</span>
         </div>
     </footer>
 

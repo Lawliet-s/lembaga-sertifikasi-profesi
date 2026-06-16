@@ -3,6 +3,8 @@
 use App\Http\Controllers\AsesiController;
 use App\Http\Controllers\AsesmenController;
 use App\Http\Controllers\AsesorController;
+use App\Http\Controllers\AsesorDashboardController;
+use App\Http\Controllers\AuthImageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Beranda_img1Controller;
 use App\Http\Controllers\Beranda_img2Controller;
@@ -12,7 +14,6 @@ use App\Http\Controllers\Dashboard_adminController;
 use App\Http\Controllers\Dashboard_asesiController;
 use App\Http\Controllers\DeleteGaleriFotoController;
 use App\Http\Controllers\F_profilController;
-use App\Http\Controllers\Fileapl2Controller;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FilelainController;
 use App\Http\Controllers\GaleriController;
@@ -22,8 +23,10 @@ use App\Http\Controllers\KkniController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProdiController;
-use App\Http\Controllers\ReadAPL2Controller;
+use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\RegistrasiController;
+use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\SkemaController;
 use App\Http\Controllers\SkkniController;
 use App\Http\Controllers\StrorgController;
@@ -35,9 +38,6 @@ use App\Http\Controllers\Upload_DokumenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiController;
 use App\Http\Controllers\XnxxController;
-use App\Http\Controllers\Formapl2Controller;
-use App\Http\Controllers\Formapl1Controller;
-use App\Models\Fileapl2;
 use GuzzleHttp\Client;
 use GuzzleHttp\Middleware;
 use Illuminate\Routing\RouteGroup;
@@ -46,6 +46,12 @@ Route::get('pdf', [UiController::class, 'pdf'])->name('pdf');
 
 Route::get('loginadmin', [ClientController::class, 'loginadmin'])->name('loginadmin');
 Route::get('registrasi_Authentification', [ClientController::class, 'reg'])->name('reg');
+
+// =============== ASESOR LOGIN ===============
+Route::get('loginasesor', [App\Http\Controllers\AsesorAuthController::class, 'loginForm'])->name('loginasesor');
+Route::post('asesor-login', [App\Http\Controllers\AsesorAuthController::class, 'login'])->name('asesor.login');
+Route::post('asesor-logout', [App\Http\Controllers\AsesorAuthController::class, 'logout'])->name('asesor.logout');
+
 Route::get('404', [UiController::class, 'notfound'])->name('404');
 
 // =============== CLIENT NEW ===============
@@ -62,7 +68,6 @@ Route::get('download', [ClientController::class, 'download'])->name('download');
 Route::get('client_skkni', [ClientController::class, 'skkni'])->name('client_skkni');
 Route::get('client_kkni', [ClientController::class, 'kkni'])->name('client_kkni');
 Route::get('client_filelain', [ClientController::class, 'filelain'])->name('client_filelain');
-Route::get('clien_fileapl2', [ClientController::class, 'fileapl2'])->name('clien_fileapl2');
 Route::get('client_skema', [ClientController::class, 'skema'])->name('client_skema');
 Route::get('skema_detail/{skema_detail}', [ClientController::class, 'skema_detail'])->name('skema_detail');
 Route::get('client_tuk', [ClientController::class, 'tuk'])->name('client_tuk');
@@ -98,6 +103,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::post('verifikasi_skema',[SkemaController::class, 'verifikasi_skema'])->name('verifikasi_skema');
     // <------------------ LAYANAN  ------------------>
     Route::resource('prodi', ProdiController::class);
+    Route::resource('jurusan', JurusanController::class);
     Route::resource('asesor', AsesorController::class);
     Route::resource('tuk', TukController::class);
     Route::resource('unikom', UnikomController::class);
@@ -105,17 +111,6 @@ Route::group(['middleware' => 'role:admin'], function () {
     // <------------------ PENGGUNA  ------------------>
     Route::resource('user', UserController::class);
     Route::put('user_update2/{user_update2}', [UserController::class, 'user_update2'])->name('user_update2');
-    // <------------------ CRUD FORM APL-01  ------------------>
-    Route::resource('form1', Formapl1Controller::class);
-
-    // <------------------ FORMAT APL-01  ------------------>
-    Route::get('jwp1/{jwp1}', [Formapl1Controller::class, 'jwp1'])->name('jwp1');
-    // <------------------ FORMAT APL-02  ------------------>
-    Route::resource('formapl2', Formapl2Controller::class);
-    Route::post('formapl2_save',[Formapl2Controller::class, 'formapl2_save'])->name('formapl2_save');
-    Route::get('jwp2/{jwp2}', [Formapl2Controller::class, 'jwp2'])->name('jwp2');
-    Route::get('dgm2/{dgm2}', [Formapl2Controller::class, 'dgm2'])->name('dgm2');
-
     // <------------------ DATA REGISTRASI  ------------------>
     Route::resource('validasi', ValidasiController::class);
     Route::get('validasi2/{validasi}/edit', [ValidasiController::class, 'index_edit'])->name('validasi.edit2');
@@ -129,10 +124,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::get('pengguna_diblacklist', [ValidasiController::class, 'list_blacklist'])->name('list.blacklist');
     Route::put('update2/{update2}', [ValidasiController::class, 'update2'])->name('finish.update');
     Route::put('tolak/{tolak}', [ValidasiController::class, 'update3'])->name('tolak.update');
-    Route::put('koreksiformulir_update/{koreksiformulir_update}', [ValidasiController::class, 'koreksiformulir_update'])->name('koreksiformulir_update.update');
-    Route::put('koreksiformulirapl2_update/{koreksiformulirapl2_update}', [ValidasiController::class, 'koreksiformulirapl2_update'])->name('koreksiformulirapl2_update');
-    Route::get('koreksiformulir/{id}', [ValidasiController::class, 'koreksiformulir'])->name('koreksiformulir');
-    Route::resource('readapl2', ReadAPL2Controller::class);
+    Route::put('validasi/{validasi}/status', [ValidasiController::class, 'updateStatus'])->name('validasi.status');
     // <------------------ GALERI  ------------------>
     Route::resource('galeri', GaleriController::class);
     Route::resource('dashadmin', Dashboard_adminController::class);
@@ -148,10 +140,10 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::get('skkni_detail/{skkni_detail}', [SkkniController::class, 'skkni_detail'])->name('skkni_detail');
     Route::resource('kkni', KkniController::class);
     Route::get('kkni_detail/{kkni_detail}', [kkniController::class, 'kkni_detail'])->name('kkni_detail');
-    Route::resource('fileapl2', Fileapl2Controller::class);
-    Route::get('fileapl2_detail/{fileapl2_detail}', [Fileapl2Controller::class, 'fileapl2_detail'])->name('fileapl2_detail');
     Route::resource('filelain', FilelainController::class);
     Route::get('filelain_detail/{filelain_detail}', [FilelainController::class, 'filelain_detail'])->name('filelain_detail');
+    // <------------------  PERMOHONAN SERTIFIKASI redirect  ------------------>
+    Route::permanentRedirect('permohonan-sertifikasi', 'registrasi_baru');
     //  <------------------ NOTE  ------------------>
     Route::resource('note', NoteController::class);
     //  <------------------ FRONT SETTING  ------------------>
@@ -160,13 +152,17 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::resource('beranda_img2', Beranda_img2Controller::class);
     Route::resource('f_profil', F_profilController::class);
     Route::resource('strorg', StrorgController::class);
+    Route::resource('site_setting', SiteSettingController::class);
     Route::post('upload', [GaleriController::class, 'upload'])->name('upload');
     Route::post('finishstore', [ValidasiController::class, 'finishstore'])->name('finishstore');
+    // <------------------ GAMBAR AUTH  ------------------>
+    Route::get('auth-images', [AuthImageController::class, 'index'])->name('auth.images.index');
+    Route::put('auth-images', [AuthImageController::class, 'update'])->name('auth.images.update');
 });
 
 
 // =============== ASESION ===============
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'role:asesi']], function () {
     //  <------------------ REGISTER  ------------------>
     Route::resource('dashasesi', Dashboard_asesiController::class);
     Route::resource('asesi', AsesiController::class);
@@ -186,18 +182,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('rekap_registrasi', [XnxxController::class, 'rekap_registrasi'])->name('rekap.registrasi');
     Route::delete('register/{register}', [XnxxController::class, 'destroy2'])->name('register.destroy');
     Route::resource('identitas', Upload_DokumenController::class);
-    Route::get('edit', [AsesiController::class, 'edit'])->name('profil.edit');
-    Route::get('Pendaftaran_Sertifikasi', [AsesiController::class, 'edit2'])->name('profil.edit2');
-    Route::put('update', [AsesiController::class, 'update'])->name('profil.update');
-    Route::get('formulirapl2_edit', [AsesiController::class, 'formulirapl2_edit'])->name('formulirapl2.edit');
-    Route::put('formulirapl2_update', [AsesiController::class, 'formulirapl2_update'])->name('formulirapl2.update');
-    Route::put('formulirapl3_update', [AsesiController::class, 'formulirapl3_update'])->name('formulirapl3.update');
-    Route::get('formulirapl2edit/{id}', [RegistrasiController::class, 'formulirapl2edit'])->name('formulirapl2edit');
     Route::get('sertifikat_show/{id}', [AsesiController::class, 'sertifikat_show'])->name('sertifikat_show');
     Route::get('rekap_pendaftaran/{id}', [RegistrasiController::class, 'rekap_pendaftaran'])->name('rekap_pendaftaran');
     Route::get('info_sertifikasi/{id}', [RegistrasiController::class, 'info_sertifikasi'])->name('info_sertifikasi');
     Route::get('data_edit_tolak/{id}', [RegistrasiController::class, 'data_edit_tolak'])->name('data_edit_tolak');
-    Route::get('formulirapl2edit_tolak/{id}', [RegistrasiController::class, 'formulirapl2edit_tolak'])->name('formulirapl2edit_tolak');
+    // <------------------  PERMOHONAN SERTIFIKASI  ------------------>
+    Route::resource('permohonan', PermohonanController::class);
+    Route::get('get-unit-kompetensi/{skemaId}', [PermohonanController::class, 'getUnitKompetensi'])->name('get.unit.kompetensi');
+    Route::get('frapl01', [PermohonanController::class, 'frapl01'])->name('permohonan.frapl01');
+    Route::get('frapl01/{id}', [PermohonanController::class, 'showFrapl01'])->name('permohonan.frapl01.show');
+    // <------------------  FR.APL.02  ------------------>
+    Route::get('apl02', [\App\Http\Controllers\Apl02Controller::class, 'index'])->name('apl02.index');
+    Route::get('apl02/create/{id}', [\App\Http\Controllers\Apl02Controller::class, 'create'])->name('apl02.create');
+    Route::post('apl02/store', [\App\Http\Controllers\Apl02Controller::class, 'store'])->name('apl02.store');
+    Route::get('apl02/{id}', [\App\Http\Controllers\Apl02Controller::class, 'show'])->name('apl02.show');
+    // <------------------ PROFIL ASESI ------------------>
+    Route::get('edit', [AsesiController::class, 'edit'])->name('profil.edit');
+    Route::put('edit', [AsesiController::class, 'update'])->name('profil.update');
 
 });
 
@@ -206,10 +207,24 @@ Route::resource('post', PostController::class);
 // =============== AUTH ===============
 Route::get('asesion', [App\Http\Controllers\HomeController::class, 'index3'])->name('asesion');
 Route::middleware('role:admin')->get('admin', [App\Http\Controllers\Dashboard_adminController::class, 'index'])->name('admin');
+Route::middleware('role:asesor')->prefix('dashboard-asesor')->group(function () {
+    Route::get('/', [AsesorDashboardController::class, 'index'])->name('dashboard.asesor');
+    Route::get('profil', [AsesorDashboardController::class, 'profil'])->name('asesor.profil');
+    Route::get('penilaian', [AsesorDashboardController::class, 'penilaian'])->name('asesor.penilaian');
+    Route::get('penilaian/{register}', [AsesorDashboardController::class, 'penilaianShow'])->name('asesor.penilaian.show');
+    Route::post('penilaian/{register}/update', [AsesorDashboardController::class, 'updatePenilaian'])->name('asesor.penilaian.update');
+    Route::get('observasi', [AsesorDashboardController::class, 'observasiIndex'])->name('asesor.observasi');
+    Route::get('observasi/{register}', [AsesorDashboardController::class, 'observasi'])->name('asesor.observasi.show');
+    Route::post('observasi/{register}', [AsesorDashboardController::class, 'storeObservasi'])->name('asesor.observasi.store');
+    Route::get('validasi', [AsesorDashboardController::class, 'validasi'])->name('asesor.validasi');
+    Route::get('validasi/{register}', [AsesorDashboardController::class, 'validasiShow'])->name('asesor.validasi.show');
+    Route::post('validasi/{register}', [AsesorDashboardController::class, 'storeValidasi'])->name('asesor.validasi.store');
+    Route::get('rekomendasi', [AsesorDashboardController::class, 'rekomendasi'])->name('asesor.rekomendasi');
+    Route::get('rekomendasi/{register}', [AsesorDashboardController::class, 'rekomendasiShow'])->name('asesor.rekomendasi.show');
+    Route::post('rekomendasi/{register}', [AsesorDashboardController::class, 'storeRekomendasi'])->name('asesor.rekomendasi.store');
+    Route::get('rekomendasi/{register}/pdf/{type}', [AsesorDashboardController::class, 'generatePdf'])->name('asesor.rekomendasi.pdf');
+});
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('edit', [AsesiController::class, 'edit'])->name('profil.edit');
-Route::put('update', [AsesiController::class, 'update'])->name('profil.update');
 
 Route::get('skema1', [HomeController::class, 'skema1'])->name('skema1');
 Route::get('list', [HomeController::class, 'list'])->name('list');

@@ -1,7 +1,7 @@
 @extends('layout/asesi')
 
 @section('judul')
-    Revisi Pendaftaran | LSP-POLITAP
+    Revisi Pendaftaran {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -24,7 +24,7 @@
             <div class="modal-body">
                 <ol>
                     <li class="font-weight-bold">Sebelum menekan tombol kirim data pendaftran, Harap diisi terlebih dahulu
-                        data Formulir APL-01 dan Formuli APL-02 dibawah ini.</li>
+                        data Formulir dibawah ini.</li>
                     <li class="font-weight-bold">Harap Membaca Intruksi yang tersedia.</li>
                     <li class="font-weight-bold">Setelah mengirim data pendaftaran , maka data pendaftaran tidak dapat diubah.</li>
                 </ol>
@@ -223,7 +223,7 @@
                             Dikoreksi</span>. </li>
                         <li>Pastikan semua data pada Formulir APL-02 harus Kompeten. </p>
                         <li>Klik tombol "Kirim Data Pendaftaran" pada paling atas halaman </p>
-                        <li>Setelah menekan tombol tersebut, maka data pendaftaran akan terkirim ke Admin LSP-POLITAP</p>
+                        <li>Setelah menekan tombol tersebut, maka data pendaftaran akan terkirim ke Admin {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</p>
                     </ol>
                 </div>
                 <div class="modal-footer">

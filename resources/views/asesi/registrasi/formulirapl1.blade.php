@@ -5,7 +5,7 @@
 @endsection
 
 @section('judul')
-    Mengisi Formulir | LSP-POLITAP
+    Mengisi Formulir {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('isi')
@@ -37,7 +37,7 @@
                         <ol>
                             <li class="font-weight-bold">Sebelum menekan tombol kirim data pendaftran, Harap diisi terlebih
                                 dahulu
-                                data Formulir APL-01 dan Formuli APL-02 dibawah ini.</li>
+                                data Formulir dibawah ini.</li>
                             <li class="font-weight-bold">Harap Membaca Intruksi yang tersedia.</li>
                             <li class="font-weight-bold">Setelah mengirim data pendaftaran , maka data pendaftaran tidak
                                 dapat diubah.</li>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Setelah mengirim data pendaftaran , maka data pendaftaran tidak dapat diedit kembali</p>
-                            <p>Apakah anda yakin ingin akan mengirim data pendaftaran ini ke Admin LSP-POLITAP?</p>
+                            <p>Apakah anda yakin ingin akan mengirim data pendaftaran ini ke Admin LSP?</p>
                             <input type="hidden" name="skema_id"
                                 value="belom{{ $data->kode_skema }}{{ $data->user_id }}">
                             <input type="hidden" name="status"
@@ -397,7 +397,7 @@
                     <p>3. Setelah Upload berhasil keterangan Statusnya menjadi "Kompeten". </p>
                     <p>4. Pastikan semua data pada Formulir APL-02 harus <span style="color: rgb(30, 187, 16)">"Kompeten"</span> . </p>
                     <p>5. Klik tombol <span style="color: rgb(30, 187, 16)">"Kirim Data Pendaftaran"</span> yang terletak paling atas halaman. </p>
-                    <p>6. Data pendaftaran akan terkirim ke Admin LSP-POLITAP.</p>
+                    <p>6. Data pendaftaran akan terkirim ke Admin {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>

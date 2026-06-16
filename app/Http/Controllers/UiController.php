@@ -62,7 +62,7 @@ class UiController extends Controller
         $image2 = Beranda_img2::orderBy('created_at','desc')->take(4)->get();
         $carousel = Beranda_img1::all();
         $beranda = Beranda::all();
-        $profil = F_profil::where('id', '1')->get();
+        $profil = F_profil::first();
         $strorg = Strorg::all();
         $skema = Skema::all();
         $unikom = Unikom::all();
@@ -103,8 +103,8 @@ class UiController extends Controller
     {
         $strorg = Strorg::all();
         $beranda = Beranda::all();
-        $profil = F_profil::where('id', '2')->get();
-        return view('front/profil', compact('profil', 'strorg', 'beranda'));
+        $profil = F_profil::first();
+        return view('client/tentang', compact('profil', 'strorg', 'beranda'));
     }
 
 

@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $note->judul }} | Admin LSP POLITAP
+    {{ $note->judul }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -17,8 +17,8 @@
     </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ url('admin') }}">Dashboard</a></li>
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('note.index') }}">Catatan</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ url('admin') }}">Dashboard</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('note.index') }}">Catatan</a></li>
             <li style="color: #fff" class="breadcrumb-item active" aria-current="page">{{ $note->id }}</li>
         </ol>
     </nav>

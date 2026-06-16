@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Strorg extends Model
 {
-    protected $fillable = ['image'];
+    protected $fillable = ['image', 'keterangan'];
     protected $table = 'strorg';
 }

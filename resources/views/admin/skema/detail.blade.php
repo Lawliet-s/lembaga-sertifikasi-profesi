@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $skema->skema }} | Admin LSP POLITAP
+    {{ $skema->skema }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -63,7 +63,7 @@
                                 <div class="media">
                                     <i class="fas fa-user icon-sm align-self-center mr-3"></i>
                                     <div class="media-body">
-                                        <h6 class="mb-1">{{ $skema->asesor->nama }}</h6>
+                                        <h6 class="mb-1">{{ $skema->asesor?->nama ?? '-' }}</h6>
                                         <p class="mb-0 text-muted">
                                             Penanggung Jawab
                                         </p>
@@ -76,7 +76,7 @@
                                 <div class="media">
                                     <i class="fa fa-building icon-sm align-self-center mr-3"></i>
                                     <div class="media-body">
-                                        <h6 class="mb-1">{{ $skema->tuk->tuk }}</h6>
+                                        <h6 class="mb-1">{{ $skema->tuk?->tuk ?? '-' }}</h6>
                                         <p class="mb-0 text-muted">
                                             Tempat Uji Kompetensi
                                         </p>
@@ -90,7 +90,7 @@
                             <div class="media">
                                 <i class="fa fa-check-square icon-sm align-self-center mr-3"></i>
                                 <div class="media-body">
-                                    <h6 class="mb-1">{{ $skema->status->status }}</h6>
+                                    <h6 class="mb-1">{{ $skema->status_id }} @if($skema->verifikasi_skema) | {{ $skema->verifikasi_skema->name }} @endif</h6>
                                     <p class="mb-0 text-muted">
                                         Status Skema
                                     </p>

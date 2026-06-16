@@ -36,14 +36,14 @@ class StrorgController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'image' => ['required', 'max:1000'],
-        ],[
-            'image.required' => 'Gambarnya mana?',
-            'image.max' => 'Gambarnya Kegedean.., ukuran gambar maksimal 1 mb',
-        ]);
         $strorg = Strorg::findorfail($id);
         if ($request->has('image')) {
+            $request->validate([
+                'image' => ['required', 'max:1000'],
+            ],[
+                'image.required' => 'Gambarnya mana?',
+                'image.max' => 'Gambarnya Kegedean.., ukuran gambar maksimal 1 mb',
+            ]);
             $image = $request->image;
             $new_image = time().$image->getClientOriginalName();
             $image->move('uploads/strorg/', $new_image);

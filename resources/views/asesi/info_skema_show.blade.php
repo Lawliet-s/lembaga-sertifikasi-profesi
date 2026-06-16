@@ -1,7 +1,7 @@
 @extends('layout/asesi')
 
 @section('judul')
-    Informasi Skema | LSP-POLITAP
+    Informasi Skema {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -18,8 +18,8 @@
     <!-- /////////////////////////////////// -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
-            <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('info.skema') }}">Skema/Kluster</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
+            <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('info.skema') }}">Skema/Kluster</a></li>
             <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Detail Skema </li>
         </ol>
     </nav>
@@ -61,7 +61,7 @@
                         <div class="media">
                         <i class="fas fa-user icon-sm align-self-center mr-3"></i>
                             <div class="media-body">
-                                <h6 class="mb-1">{{ $skema->asesor->nama }}</h6>
+                                <h6 class="mb-1">{{ $skema->asesor?->nama ?? '-' }}</h6>
                                 <p class="mb-0 text-muted">
                                     Penanggung Jawab Skema
                                 </p>
@@ -74,7 +74,7 @@
                         <div class="media">
                         <i class="fa fa-building icon-sm align-self-center mr-3"></i>
                         <div class="media-body">
-                            <h6 class="mb-1">{{ $skema->tuk->tuk }}</h6>
+                            <h6 class="mb-1">{{ $skema->tuk?->tuk ?? '-' }}</h6>
                             <p class="mb-0 text-muted">
                             Tempat Uji Kompetensi
                             </p>
@@ -88,7 +88,7 @@
                         <div class="media">
                             <i class="fa fa-check-square icon-sm align-self-center mr-3"></i>
                             <div class="media-body">
-                                <h6 class="mb-1">{{ $skema->status->status }}</h6>
+                                <h6 class="mb-1">{{ $skema->status_id }}</h6>
                                 <p class="mb-0 text-muted">
                                     Status Skema
                                 </p>

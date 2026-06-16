@@ -5,7 +5,7 @@
 @endsection
 
 @section('judul')
-    Pendaftaran Skema | LSP-POLITAP
+    Pendaftaran Skema {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @include('layout/verifikasi')
@@ -44,6 +44,10 @@
                                                     style="width: 575.75px;">Skema</th>
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing"
                                                     rowspan="1" colspan="1"
+                                                    aria-label="Status: activate to sort column ascending"
+                                                    style="width: 80px;">Status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
+                                                    rowspan="1" colspan="1"
                                                     aria-label="Order #: activate to sort column ascending"
                                                     style="width: 10.4219px;">Lihat</th>
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing"
@@ -58,6 +62,7 @@
                                                     <td class="font-weight-bold">{{ $loop->iteration }}</td>
                                                     <td class="font-weight-bold">{{ $asu->kode_skema }}</td>
                                                     <td class="font-weight-bold">{{ $asu->skema }}</td>
+                                                    <td class="font-weight-bold">{{ $asu->status_id }}</td>
                                                     <td class="text-right">
                                                         <a href="{{ route('info_skema.show', $asu->id) }}"><button
                                                                 type="submit"

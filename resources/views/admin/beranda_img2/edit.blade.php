@@ -1,7 +1,7 @@
 @extends('layout/admin')
 
 @section('judul')
-    {{ $pengelola->nama }} | Admin LSP POLITAP
+    {{ $pengelola->nama }} | Admin LSP
 @endsection
 
 @section('sidebar')
@@ -19,8 +19,8 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('beranda_img2.index') }}"> Pengelola</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}">Dashboard</a></li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('beranda_img2.index') }}"> Pengelola</a></li>
                 <li style="color: #fff" class="breadcrumb-item active" aria-current="page">{{ $pengelola->id }}</li>
             </ol>
         </nav>

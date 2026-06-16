@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login-Admin | LSP POLITAP</title>
+    <title>Login Admin</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/auth.css') }}">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
@@ -16,35 +16,34 @@
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/vendor.bundle.addons.js') }}"></script>
     <link rel="shortcut icon" href="{{ asset('general/assets/images/shortcut.jpg') }}" />
+    <style>
+        :root {
+            --primary-color: {{ optional($site_setting)->primary_color ?? '#9b0000e2' }};
+            --secondary-color: {{ optional($site_setting)->secondary_color ?? '#f84949e2' }};
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
         <div class="card card0 border-0">
             <div class="row d-flex">
-                <div class="col-lg-6">
-                    <div class="card1 pb-5">
-                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                            <img src="{{ asset('assets/images/logo/bnsp.png') }}" class="logo">
-                            <img src="{{ asset('assets/images/logo/kemendikbud_small.png') }}" class="logo3">
-                            <img src="{{ asset('assets/images/logo/politap_small.png') }}" class="logo3">
-                            <img src="{{ asset('assets/images/logo/lsp_small.jpg') }}" class="logo2"><br><br>
-                        </div>
-                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                            <img src="{{ asset('assets/images/auth/login_admin.png') }}" class="image2">
-                        </div>
-                    </div>
+                <div class="col-lg-6 px-0">
+                    <div class="card1" style="background: url('{{ asset('assets/images/auth/login_admin.png') }}') center center / cover no-repeat;"></div>
                 </div>
                 <div class="col-lg-6">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+                        <input type="hidden" name="role_login" value="admin">
                         <div class="card2 card border-0 px-4 py-5">
-                            <div class="row mb-4 px-3">
-                                <h6 class="mb-0 mr-4 mt-2">Lembaga Sertifikasi Profesi Pihak Ke Satu Politektik Negeri
-                                    Ketapang</h6>
+                            <div class="row px-3 mt-4 mb-2 border-line">
+                                <img src="{{ asset($site_setting->logo ?? 'assets/images/logo/lsp1.png') }}" class="logo2"><br><br>
                             </div>
-                            <div class="row px-3 mb-4 w3-panel w3-border-bottom">
-                                <label style="padding-left: 35%;">Login Admin LSP - POLITAP</label>
+                            <div class="row mb-4 px-3">
+                                <h6 class="mb-0 mr-4 mt-2">{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</h6>
+                            </div>
+                            <div class="row px-3 mb-4 w3-panel w3-border-bottom justify-content-center">
+                                <label class="text-center">Login Admin</label>
                             </div>
                             <div class="row px-3">
                                 <label class="mb-1">
@@ -74,31 +73,27 @@
                                 @enderror
                             </div>
                             <div class="row px-3 mb-4">
-                                <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" name="remember" id="remember" class="form-check-input"
+                                <div class="custom-control custom-checkbox w-100">
+                                    <input type="checkbox" name="remember" id="remember" class="custom-control-input"
                                         {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="custom-control-label text-muted" for="remember" style="margin-left: 5px;">Ingatkan saya</label>
                                 </div>
-                                <label class="form-check-label  text-muted" for="remember">Ingatkan saya</label>
                                 @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="ml-auto mb-0 text-sm">Lupa
-                                        Password?</a>
+                                    <a href="{{ route('password.request') }}" class="ml-auto mb-0 text-sm" style="align-self: center;">Lupa Password?</a>
                                 @endif
 
 
                             </div>
                             <div class="row mb-3 px-3">
-                                <button type="submit" class="btn btn-danger text-center">Login</button>
+                                <button type="submit" class="btn text-center" style="background-color: var(--primary-color); color: #fff; border: none;">Login</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div style="background-color: #000;" class="bg text-white py-4">
+            <div style="background-color: var(--primary-color);" class="bg text-white py-4">
                 <div class="row px-3">
-                    <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2022. Designed & Developed By <a
-                            href="http://informatika.politap.ac.id/" target="_blank"> Teknik Informatika
-                        </a> <a href="https://politap.ac.id/" target="_blank">Politeknik Negeri
-                            Ketapang</small>
+                        <small class="ml-4 ml-sm-5 mb-2">{!! $site_setting->footer_text ?? 'Copyright © 2022 &diamondsuit; All Right Reserved' !!}<br></small>
                 </div>
             </div>
         </div>

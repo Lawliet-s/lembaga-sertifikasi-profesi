@@ -1,6 +1,6 @@
 @extends('layout.client')
 @section('judul')
-    Struktur | LSP POLITAP
+    Struktur | LSP
 @endsection
 
 @section('profil')
@@ -9,12 +9,12 @@
 
 @section('isi')
     <!-- ***** Header ***** -->
-    <div style="background-image: url('{{ asset('general/assets/images/head1.jpg') }}')" class="page-heading header-text">
+    <div style="background-image: url('{{ asset($site_setting->header_image ?? 'general/assets/images/head1.jpg') }}')" class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1><i class="fas fa-sitemap"></i> Struktur Organisasi</h1>
-                    <span>Lembaga Sertifikasi Profesi Politeknik Negeri Ketapang</span>
+                    <span>{{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}</span>
                 </div>
             </div>
         </div>
@@ -31,9 +31,11 @@
                         <div class="col-md-8 align-self-center">
                         </div>
                         <div class="col-md-12">
-                            @foreach ($struktur as $asu)
+                            @forelse ($struktur as $asu)
                                 <img src="{{ asset($asu->image) }}" width="100%" alt="">
-                            @endforeach
+                            @empty
+                                <p class="text-muted text-center">Belum ada struktur organisasi.</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>

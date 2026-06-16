@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,10 +27,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'min:9', 'unique:users'],
-            'email2' => ['required', 'unique:users'],
-            'jurusan_id' => ['required'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required'],
             'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
@@ -38,16 +36,20 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'name' => explode('@', $data['email'])[0],
             'email' => $data['email'],
-            'email2' => $data['email2'],
-            'jurusan_id' => $data['jurusan_id'],
             'role' => $data['role'],
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->assignRole('user');
+        $user->assignRole('asesi');
         return $user;
+    }
+
+
+    protected function registered(Request $request, $user)
+    {
+        session()->flash('success', 'Pendaftaran berhasil!');
     }
 }

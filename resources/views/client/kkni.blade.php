@@ -1,6 +1,6 @@
 @extends('layout/client')
 @section('judul')
-    KKNI | LSP-POLITAP
+    KKNI {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ asset('client/css/Download.css') }}">

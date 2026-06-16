@@ -25,4 +25,25 @@ class Asesor extends Model
         return $this->hasMany(Skema::class);
     }
 
+    public function data_registers(){
+        return $this->hasMany(Data_register::class, 'asesor_id');
+    }
+
+    public function penilaians(){
+        return $this->hasManyThrough(
+            Penilaian::class,
+            Data_register::class,
+            'asesor_id',
+            'data_register_id'
+        );
+    }
+
+    public function observasis(){
+        return $this->hasManyThrough(
+            Observasi::class,
+            Data_register::class,
+            'asesor_id',
+            'data_register_id'
+        );
+    }
 }

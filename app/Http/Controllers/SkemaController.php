@@ -6,7 +6,6 @@ use App\Models\Asesor;
 use App\Models\CekPendaftaran;
 use App\Models\Prodi;
 use App\Models\Skema;
-use App\Models\Status;
 use App\Models\Tuk;
 use App\Models\Unikom;
 use App\Models\VerifikasiSkema;
@@ -17,12 +16,12 @@ class SkemaController extends Controller
 {
 
     public function index(){
-        $status = Status::all();
         $tuk = Tuk::all();
         $asesor = Asesor::all();
         $prodi = Prodi::all();
+        $verifikasi_skemas = VerifikasiSkema::all();
         $skema = Skema::orderBy('created_at','desc')->get();
-        return view('admin/skema/index', compact('skema', 'prodi', 'asesor', 'tuk',  'status'));
+        return view('admin/skema/index', compact('skema', 'prodi', 'asesor', 'tuk', 'verifikasi_skemas'));
     }
 
 
@@ -50,7 +49,7 @@ class SkemaController extends Controller
             'asesor_id' =>$request->asesor_id,
             'tuk_id' =>$request->tuk_id,
             'status_id' =>$request->status_id,
-
+            'verifikasi_skema_id' =>$request->verifikasi_skema_id,
         ]);
         return redirect()->route('skema.index')->with('success','Skema anda berhasil di Posting');
     }
@@ -65,12 +64,12 @@ class SkemaController extends Controller
 
     public function edit($id) {
         $decryptID = Crypt::decryptString($id);
-        $status = Status::all();
         $tuk = Tuk::all();
         $asesor = Asesor::all();
         $prodi = Prodi::all();
+        $verifikasi_skemas = VerifikasiSkema::all();
         $skema = Skema::findorfail($decryptID);
-        return view('admin/skema/edit', compact('skema', 'prodi', 'asesor', 'tuk', 'status'));
+        return view('admin/skema/edit', compact('skema', 'prodi', 'asesor', 'tuk', 'verifikasi_skemas'));
     }
 
 
@@ -80,7 +79,7 @@ class SkemaController extends Controller
             'prodi_id' => ['required'],
             'asesor_id' => ['required'],
             'tuk_id' => ['required'],
-            'status_id' => ['required']
+            'status_id' => ['required'],
         ],[
             'skema.required' => 'Skemanya mana?',
             'kode_skema.required' => 'Kode Skemanya mana?',
@@ -96,6 +95,7 @@ class SkemaController extends Controller
             'asesor_id' =>$request->asesor_id,
             'tuk_id' =>$request->tuk_id,
             'status_id' =>$request->status_id,
+            'verifikasi_skema_id' =>$request->verifikasi_skema_id,
         ];
         Skema::whereId($id)->update($skema_data);
         return redirect()->route('skema.index')->with('success','Skema Anda Berhasil di Ubah');

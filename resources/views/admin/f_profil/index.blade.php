@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('judul')
-    Profil LSP-POLITAP | Admin LSP POLITAP
+    Profil {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
 @endsection
 
 @section('sidebar')
@@ -13,12 +13,12 @@
     {{-- <---------------------- PAGE HEADER ----------------------> --}}
     <div class="page-header">
         <h3>
-            <i class="fas fa-cogs"></i> Settingan Profil LSP-POLITAP
+            <i class="fas fa-cogs"></i> Settingan Profil
         </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li style="color: #f64d4d" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Settingan Profil LSP-POLITAP</li>
+                <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li style="color: #fff" class="breadcrumb-item active" aria-current="page">Settingan Profil</li>
             </ol>
         </nav>
     </div><br>
@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">SETTING PROFIL</h4>
-            @foreach ($profil2 as $asu)
+            @forelse ($profil as $asu)
                 <div class="faq-section">
                     <div class="container-fluid py-2">
                         <a href="{{ route('f_profil.edit', Crypt::encryptString($asu->id)) }}">
@@ -44,7 +44,7 @@
                                 <h4 class="mb-0">
                                     <a data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true"
                                         aria-controls="collapseOne2">
-                                        Profil LSP P1 - POLITAP
+                                        Profil {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
                                     </a>
                                 </h4>
                             </div>
@@ -60,7 +60,7 @@
                                 <h5 class="mb-0">
                                     <a data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="true"
                                         aria-controls="collapseTwo3">
-                                        Visi LSP P1 - POLITAP
+                                        Visi {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
                                     </a>
                                 </h5>
                             </div>
@@ -75,7 +75,7 @@
                                 <h5 class="mb-0">
                                     <a data-toggle="collapse" data-target="#collapseThree4" aria-expanded="true"
                                         aria-controls="collapseThree4">
-                                        Misi LSP P1 - POLITAP
+                                        Misi {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
                                     </a>
                                 </h5>
                             </div>
@@ -91,7 +91,7 @@
                                 <h5 class="mb-0">
                                     <a data-toggle="collapse" data-target="#collapse45" aria-expanded="true"
                                         aria-controls="collapseThree">
-                                        Motto LSP P1 - POLITAP
+                                        Motto {{ $site_setting->title ?? 'Lembaga Sertifikasi Profesi' }}
                                     </a>
                                 </h5>
                             </div>
@@ -101,24 +101,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree6">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" data-target="#collapse56" aria-expanded="true"
-                                        aria-controls="collapseThree">
-                                        Logo LSP P1 - POLITAP
-                                    </a>
-                                </h5>
-                            </div>
-                            <div id="collapse56" class="collapse" aria-labelledby="headingThree" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <img src="{{ asset($asu->image) }}" style="width: 200px" alt="">
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="text-center py-4">
+                    <p class="text-muted">Belum ada data profil.</p>
+                    <a href="{{ route('f_profil.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Profil
+                    </a>
+                </div>
+            @endforelse
         </div>
     </div>
 @endsection

@@ -28,7 +28,7 @@
                             </div>
                             <div class="mt-5">
                                 <a class="btn btn-block btn-danger btn-lg font-weight-medium"
-                                    href="{{ route('admin') }}"><i class="fas fa-cogs"></i> Halaman Admin</a>
+                                    href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}"><i class="fas fa-cogs"></i> Halaman Admin</a>
                             </div>
                             <div class="mt-5">
                                 <a class="btn btn-block btn-primary btn-lg font-weight-medium"

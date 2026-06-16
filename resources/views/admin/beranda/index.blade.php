@@ -10,7 +10,7 @@
         <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
-                <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ (Auth::user() && Auth::user()->hasRole('asesor')) ? route('dashboard.asesor') : route('admin') }}">Dashboard</a></li>
                 {{-- <li class="breadcrumb-item">
                 <a href="#"> </a>
             </li> --}}

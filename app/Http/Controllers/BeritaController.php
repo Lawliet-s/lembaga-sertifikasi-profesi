@@ -13,9 +13,8 @@ class BeritaController extends Controller
 
     public function index()
     {
-        $kategori = Kategori::all();
         $berita = Berita::orderBy('created_at','desc')->get();
-        return view('admin/berita/index', compact('berita', 'kategori'));
+        return view('admin/berita/index', compact('berita'));
     }
 
 
@@ -25,14 +24,12 @@ class BeritaController extends Controller
         $request->validate([
             'title' => ['required'],
             'excerpt' => ['required'],
-            'kategori_id' => ['required'],
             'body' => ['required'],
             'status' => ['required'],
             'image' => ['required', 'max:1000']
         ],[
             'title.required' => 'Masukan Judul Berita',
             'excerpt.required' => 'Masukan excerpt Berita',
-            'kategori_id.required' => 'Pilih Kategori Berita',
             'body.required' => 'Masukan Isi Konten Berita',
             'status.required' => 'Pilih Status Postingan Berita',
             'image.required' => 'Masukan Gambar Berita',
@@ -43,7 +40,6 @@ class BeritaController extends Controller
         $berita = Berita::create([
             'title' => $request->title,
             'excerpt' => $request->excerpt,
-            'kategori_id' => $request->kategori_id,
             'body' => $request->body,
             'status' => $request->status,
             'image' => 'uploads/berita/' . $new_image,
@@ -56,9 +52,8 @@ class BeritaController extends Controller
     public function show($id)
     {
         $decryptID = Crypt::decryptString($id);
-        $kategori = Kategori::all();
         $berita = Berita::findorfail($decryptID);
-        return view('admin/berita/show', compact('berita', 'kategori'));
+        return view('admin/berita/show', compact('berita'));
     }
 
 
@@ -76,17 +71,13 @@ class BeritaController extends Controller
         $request->validate([
             'title' => ['required'],
             'excerpt' => ['required'],
-            'kategori_id' => ['required'],
             'body' => ['required'],
             'status' => ['required'],
-            // 'image' => ['required']
         ],[
             'title.required' => 'Masukan Judul Berita',
             'excerpt.required' => 'Masukan excerpt Berita',
-            'kategori_id.required' => 'Pilih Kategori Berita',
             'body.required' => 'Masukan Isi Konten Berita',
             'status.required' => 'Pilih Status Postingan Berita',
-            // 'image.required' => 'Masukan Gambar Berita',
         ]);
         if ($request->has('image')) {
             $image = $request->image;
@@ -95,7 +86,6 @@ class BeritaController extends Controller
             $berita_data = [
                 'title' => $request->title,
                 'excerpt' => $request->excerpt,
-                'kategori_id' => $request->kategori_id,
                 'body' => $request->body,
                 'status' => $request->status,
                 'image' => 'uploads/berita/' . $new_image,
@@ -106,7 +96,6 @@ class BeritaController extends Controller
                 'excerpt' => $request->excerpt,
                 'body' => $request->body,
                 'status' => $request->status,
-                'kategori_id' => $request->kategori_id,
             ];
         }
 
