@@ -5,18 +5,18 @@
 @endsection
 
 @section('judul')
-    FR.APL.02 - Asesmen Mandiri - {{ $site_setting->title ?? 'LSP' }}
+    FR.AK.03 - Umpan Balik dan Catatan Asesmen - {{ $site_setting->title ?? 'LSP' }}
 @endsection
 
 @section('isi')
 <div class="container-fluid">
     <div class="page-header d-flex justify-content-between align-items-center">
-        <h4><i class="fas fa-clipboard-check"></i> FR.APL.02 — Asesmen Mandiri</h4>
+        <h4><i class="fas fa-comment-dots"></i> FR.AK.03 — Umpan Balik dan Catatan Asesmen</h4>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title"><i class="fas fa-table"></i> Daftar Sertifikasi</h4>
+            <h4 class="card-title"><i class="fas fa-table"></i> Daftar Sertifikasi Selesai</h4>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive table-striped">
@@ -29,43 +29,49 @@
                                             <tr class="bg-danger text-white" role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 10px;">#</th>
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 80px;">Aksi</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 300px;">Skema</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 200px;">Skema</th>
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Kode Reg</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Tanggal</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Tanggal Selesai</th>
                                                 <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($registrations as $item)
-                                                @php
-                                                    $hasXnxx = \App\Models\Xnxx::where('data_register_id', $item->id)
-                                                        ->where('user_id', auth()->user()->id)
-                                                        ->exists();
-                                                @endphp
+                                                @php $frAk03 = $item->frAk03; @endphp
                                                 <tr role="row" class="odd">
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td class="text-right">
-                                                        @if ($hasXnxx)
-                                                            <a href="{{ route('apl02.show', $item->id) }}" class="btn btn-sm btn-primary" title="Lihat APL.02">
+                                                        @if ($frAk03)
+                                                            <a href="{{ route('frak03.show', $item->id) }}" class="btn btn-primary btn-sm" title="Lihat">
                                                                 <i class="fas fa-eye"></i> Lihat
                                                             </a>
                                                         @else
-                                                            <a href="{{ route('apl02.create', $item->id) }}" class="btn btn-sm btn-success" title="Isi APL.02">
+                                                            <a href="{{ route('frak03.show', $item->id) }}" class="btn btn-success btn-sm" title="Isi Umpan Balik">
                                                                 <i class="fas fa-edit"></i> Isi
                                                             </a>
                                                         @endif
                                                     </td>
                                                     <td class="font-weight-bold">{{ $item->skema_name }}</td>
                                                     <td><code>#{{ $item->id }}</code></td>
-                                                    <td>{{ $item->created_at->format('d M Y') }}</td>
-                                                    <td>{!! $item->status !!}</td>
+                                                    <td>{{ $item->updated_at->format('d M Y') }}</td>
+                                                    <td>
+                                                        @if ($frAk03)
+                                                            <span class="badge" style="background-color: #28a745; color: #fff;">
+                                                                <i class="fas fa-check"></i> Sudah diisi
+                                                            </span>
+                                                        @else
+                                                            <span class="badge" style="background-color: #ffc107; color: #000;">
+                                                                <i class="fas fa-clock"></i> Belum diisi
+                                                            </span>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @empty
                                                 <tr role="row">
                                                     <td colspan="6" class="text-center py-4 text-muted">
-                                                        <i class="fas fa-clipboard-list fa-2x mb-2"></i><br>
-                                                        Belum ada sertifikasi yang divalidasi.<br>
-                                                        <small>Anda dapat mengisi FR.APL.02 setelah pendaftaran sertifikasi Anda divalidasi.</small>
+                                                        <i class="fas fa-clipboard-check fa-2x mb-2"></i><br>
+                                                        Belum ada sertifikasi yang selesai.<br>
+                                                        <small>FR.AK.03 akan tersedia setelah proses sertifikasi selesai.</small>
                                                     </td>
                                                 </tr>
                                             @endforelse

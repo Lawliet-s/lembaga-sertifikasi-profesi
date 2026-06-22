@@ -13,9 +13,6 @@
         <h4>
             <i class="fas fa-certificate"></i> Koleksi Sertifikat
         </h4>
-        <!-- /////////////////////////////////// -->
-        <!-- BREADCRUMB -->
-        <!-- /////////////////////////////////// -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom  bg-danger">
                 <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
@@ -23,17 +20,13 @@
             </ol>
         </nav>
     </div><br>
-    <!-- /////////////////////////////////// -->
-    {{-- TAMPIL SKEMA --}}
-    <!-- /////////////////////////////////// -->
+
     <div class="card">
         <div class="card-body">
             <h4 class="card-title"><i class="fas fa-table"></i> Daftar Pemegang Sertifikat</h4>
-            <div class="row grid-margin">
-            </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="table-responsive">
+                    <div class="table-responsive table-striped">
                         <div id="order-listing_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                             <div class="row">
                                 <div class="col-sm-12">
@@ -41,43 +34,34 @@
                                         aria-describedby="order-listing_info">
                                         <thead>
                                             <tr class="bg-danger text-white" role="row">
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Order #: activate to sort column ascending"
-                                                    style="width: 10.4219px;">#</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Order #: activate to sort column ascending"
-                                                    style="width: 10.4219px;">Action</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Actions: activate to sort column ascending"
-                                                    style="width: 150.141px;">Kode Registrasi</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Customer: activate to sort column ascending"
-                                                    style="width: 575.75px;">Skema</th>
-                                                <th class="sorting" tabindex="0" aria-controls="order-listing"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Ship to: activate to sort column ascending"
-                                                    style="width: 97.5469px;">Tanggal</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 10px;">#</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 80px;">Aksi</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 150px;">Kode Registrasi</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 400px;">Skema</th>
+                                                <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Tanggal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($datareg as $hasil => $asu)
+                                            @forelse ($datareg as $item)
                                                 <tr role="row" class="odd">
                                                     <td class="font-weight-bold">{{ $loop->iteration }}</td>
                                                     <td class="text-right">
-                                                        <a href="{{ route('sertifikat_show', Crypt::encryptString($asu->id)) }}"><button
-                                                                type="submit"
-                                                                class="btn btn-dark btn-sm btn-block font-weight-bold"><i
-                                                                    class="fa fa-eye "></i> Lihat Detail</button></a>
+                                                        <a href="{{ route('sertifikat_show', Crypt::encryptString($item->id)) }}" class="btn btn-dark btn-sm font-weight-bold">
+                                                            <i class="fa fa-eye"></i> Lihat
+                                                        </a>
                                                     </td>
-                                                    <td class="font-weight-bold">{{ $asu->id }}</td>
-                                                    <td class="font-weight-bold">{{ $asu->skema_name }}</td>
-                                                    <td class="font-weight-bold">{{ $asu->updated_at }}</td>
+                                                    <td class="font-weight-bold">{{ $item->id }}</td>
+                                                    <td class="font-weight-bold">{{ $item->skema_name }}</td>
+                                                    <td class="font-weight-bold">{{ $item->updated_at }}</td>
                                                 </tr>
-                                            @endforeach
+                                            @empty
+                                                <tr role="row">
+                                                    <td colspan="5" class="text-center py-4 text-muted">
+                                                        <i class="fas fa-certificate fa-2x mb-2"></i><br>
+                                                        Belum ada sertifikat.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>

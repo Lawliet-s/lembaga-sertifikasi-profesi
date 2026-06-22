@@ -14,9 +14,6 @@
     <h4>
         <i class="fas fa-list"></i>  Informasi Skema
     </h4>
-    <!-- /////////////////////////////////// -->
-    <!-- BREADCRUMB -->
-    <!-- /////////////////////////////////// -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom  bg-danger">
             <li style="color: var(--secondary-color)" class="breadcrumb-item"><a href="{{ route('dashasesi.index') }}">Dashboard</a></li>
@@ -24,44 +21,52 @@
         </ol>
     </nav>
 </div><br>
-<!-- /////////////////////////////////// -->
-{{-- TAMPIL SKEMA --}}
-<!-- /////////////////////////////////// -->
+
 <div class="card">
     <div class="card-body">
         <h4 class="card-title"><i class="fas fa-table"></i> Daftar Skema</h4>
         <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <div id="order-listing_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                <div class="row">
-                    <div class="col-sm-12">
-                    <table id="order-listing" class="table dataTable table-striped no-footer" role="grid" aria-describedby="order-listing_info">
-                    <thead>
-                        <tr class="bg-danger text-white" role="row">
-                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Order #: activate to sort column ascending" style="width: 10.4219px;">#</th>
-                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Order #: activate to sort column ascending" style="width: 10.4219px;">Lihat</th>
-                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 300.141px;">Kode Skema</th>
-                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 900.75px;">Skema</th>
-                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 100px;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($skema as $hasil => $asu)
-                        <tr role="row" class="odd">
-                            <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td class="text-right">
-                                <a href="{{ route('info_skema.show', Crypt::encryptString($asu->id)) }}"><button type="submit" class="btn btn-inverse-dark btn-sm btn-block font-weight-bold"><i class="fa fa-search "></i>  Lihat Skema</button></a>
-                            </td>
-                            <td class="font-weight-bold">{{ $asu->kode_skema }}</td>
-                            <td class="font-weight-bold">{{ $asu->skema }}</td>
-                            <td class="font-weight-bold">{{ $asu->status_id }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                    </table>
-                    </div>
-                    </div>
+            <div class="col-12">
+                <div class="table-responsive table-striped">
+                    <div id="order-listing_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="order-listing" class="table dataTable no-footer" role="grid"
+                                    aria-describedby="order-listing_info">
+                                    <thead>
+                                        <tr class="bg-danger text-white" role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 10px;">#</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 80px;">Aksi</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 200px;">Kode Skema</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 500px;">Skema</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" style="width: 100px;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($skema as $item)
+                                            <tr role="row" class="odd">
+                                                <td class="font-weight-bold">{{ $loop->iteration }}</td>
+                                                <td class="text-right">
+                                                    <a href="{{ route('info_skema.show', Crypt::encryptString($item->id)) }}" class="btn btn-dark btn-sm font-weight-bold">
+                                                        <i class="fa fa-search"></i> Lihat
+                                                    </a>
+                                                </td>
+                                                <td class="font-weight-bold">{{ $item->kode_skema }}</td>
+                                                <td class="font-weight-bold">{{ $item->skema }}</td>
+                                                <td class="font-weight-bold">{{ $item->status_id }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr role="row">
+                                                <td colspan="5" class="text-center py-4 text-muted">
+                                                    <i class="fas fa-list fa-2x mb-2"></i><br>
+                                                    Belum ada skema tersedia.
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

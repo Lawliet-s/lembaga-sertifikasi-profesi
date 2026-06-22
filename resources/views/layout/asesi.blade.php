@@ -189,9 +189,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('permohonan.create') }}">FR.APL.01</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('permohonan.frapl01') }}">Status Permohonan</a>
-                                </li>
                             </ul>
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
@@ -211,6 +208,18 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('info.skema') }}">Info Skema</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('permohonan.frapl01') }}">Status Permohonan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('frak01.index') }}">FR.AK.01 Persetujuan Asesmen</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('frak03.index') }}">FR.AK.03 Umpan Balik Asesmen</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('frak04.index') }}">FR.AK.04 Banding Asesmen</a>
                                 </li>
                             </ul>
 

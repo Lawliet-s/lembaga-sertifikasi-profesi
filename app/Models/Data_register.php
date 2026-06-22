@@ -108,4 +108,20 @@ class Data_register extends Model
     public function observasis(){
         return $this->hasMany(Observasi::class, 'data_register_id');
     }
+
+    public function frAk01(){
+        return $this->hasOne(FrAk01::class, 'data_register_id');
+    }
+
+    public function frAk03(){
+        return $this->hasOne(FrAk03::class, 'data_register_id');
+    }
+
+    public function frAk04(){
+        return $this->hasOne(FrAk04::class, 'data_register_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
